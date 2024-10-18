@@ -1,9 +1,13 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 
 export default function HomeScreenOrganizationList() {
+
+    const router = useRouter();
+
     return (
         // outer container 
         <View style={{ paddingHorizontal: 4, marginBottom: 10 }}>
@@ -50,9 +54,12 @@ export default function HomeScreenOrganizationList() {
                     }}>
                         <FontAwesome name="comment-o" size={15} color={Colors.white} style={styles.notificationIcon} />
                     </TouchableOpacity> */}
-                    <TouchableOpacity style={{
-                        backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
-                    }}>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
+                        }}
+                        onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
+                    >
                         <FontAwesome name="eye" size={15} color={Colors.white} style={styles.notificationIcon} />
                     </TouchableOpacity>
 

@@ -28,7 +28,8 @@ export default function home() {
                     marginBottom: 10
                 }}>
                     <Text style={{ color: Colors.Swan, fontWeight: '500', fontSize: 18, }}>Connect with others</Text>
-                    <Text style={{ color: Colors.Blue, fontWeight: '500', textDecorationLine: 'underline' }} onPress={() => router.push('/screens/OrgScreen/OrgListScreen')}>View all</Text>
+                    <Text style={{ color: Colors.Blue, fontWeight: '500', textDecorationLine: 'underline' }}
+                        onPress={() => router.push('/screens/OrgScreen/OrgListScreen')}>View all</Text>
                 </View>
 
                 <View style={{ paddingHorizontal: 15, }}>

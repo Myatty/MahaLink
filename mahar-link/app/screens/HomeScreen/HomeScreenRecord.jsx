@@ -1,9 +1,13 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 
 export default function HomeScreenRecord() {
+
+    const router = useRouter();
+
     return (
         <View style={styles.container}>
 
@@ -48,13 +52,17 @@ export default function HomeScreenRecord() {
             {/* button start  */}
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
                 <View style={styles.button}>
-                    <Text style={styles.buttonText}>
-                        Contribute Now
+                    <Text
+                        style={styles.buttonText}
+                        onPress={() => router.push('/(tabs)/map')}>
+                        Explore Map
                     </Text>
                 </View>
                 <View style={styles.button}>
-                    <Text style={styles.buttonText}>
-                        Connect
+                    <Text
+                        style={styles.buttonText}
+                        onPress={() => router.push('/screens/OrgScreen/OrgListScreen')}>
+                        Start Connect
                     </Text>
                 </View>
             </View>

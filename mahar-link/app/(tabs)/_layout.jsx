@@ -70,21 +70,6 @@ const TabLayout = () => {
         }}
       />
 
-      <Tabs.Screen
-        name="chat"
-        options={{
-          title: "Chat",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.chat}
-              color={color}
-              name="Chat"
-              focused={focused}
-            />
-          ),
-        }}
-      />
 
       <Tabs.Screen
         name="profile"
@@ -96,6 +81,22 @@ const TabLayout = () => {
               icon={icons.profile_circle}
               color={color}
               name="Profile"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.chat}
+              color={color}
+              name="Chat"
               focused={focused}
             />
           ),

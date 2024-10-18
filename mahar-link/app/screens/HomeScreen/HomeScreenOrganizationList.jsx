@@ -45,11 +45,11 @@ export default function HomeScreenOrganizationList() {
                 </View>
                 {/* view and message buttons  */}
                 <View style={{ flexDirection: 'row', gap: 10 }}>
-                    <TouchableOpacity style={{
+                    {/* <TouchableOpacity style={{
                         backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
                     }}>
                         <FontAwesome name="comment-o" size={15} color={Colors.white} style={styles.notificationIcon} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity style={{
                         backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
                     }}>

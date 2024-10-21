@@ -10,7 +10,8 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/CustomButton";
 import { Dimensions } from "react-native";
-import { useRouter } from "expo-router"; // Use the router from expo-router
+import { Link, useRouter } from "expo-router"; // Use the router from expo-router
+import { Stack, useNavigation } from 'expo-router';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -42,10 +43,9 @@ export default function App() {
               Seamless <Text style={{ color: "#347928" }}>Communication</Text>
               {"\n"}for rapid{"\n"}Emergency{"\n"}Response
             </Text>
-
             <CustomButton
               title="Go to Login"
-              onPress={() => router.push("/(auth)/Login")} // Ensure this points to the correct path
+              handlePress={() => router.push("/(auth)/Login")} 
               containerStyles="w-full mt-7 "
             />
           </View>
@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     width: "80%",
-    marginTop: height * 0.3, // 30% of the screen height
+    marginTop: height * 0.4, // 30% of the screen height
   },
 });

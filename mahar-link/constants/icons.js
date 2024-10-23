@@ -2,6 +2,7 @@ import bookmark from "../assets/icons/bookmark.png";
 import chat from "../assets/icons/chat.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
+import group from "../assets/icons/group.png";
 import home from "../assets/icons/home.png";
 import leftArrow from "../assets/icons/left-arrow.png";
 import logout from "../assets/icons/logout.png";
@@ -32,4 +33,5 @@ export default {
   map,
   chat,
   profile_circle,
+  group
 };

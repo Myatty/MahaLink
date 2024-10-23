@@ -23,4 +23,21 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
+
+  // custom colors
+  primary: '#4A249D',
+  strongGreen: '#347928',
+  Green: '#86D293',
+  LightGreen: '#C1E2A4',
+  LightYellow: '#FDFAD9',
+  Swan: '#2E2E2E',
+  Dark: '#000000',
+  Gray: '#E6E6E6',
+  LightGray: '#F2F2F2',
+  Red: '#FF0000',
+  LightRed: '#FFA27F',
+  Yellow: '#FCCD2A',
+  white: '#FFFFFF',
+  Blue: "#009fbd",
+  Skin: "#f9e2af",
 };

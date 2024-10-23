@@ -1,6 +1,8 @@
-import { View, Text, Image } from "react-native"; // Add Image here
-import { Tabs } from "expo-router"; 
-import { icons } from "../../constants"; 
+import { Tabs } from "expo-router";
+import { Image, Text, View } from "react-native"; // Add Image here
+import { icons } from "../../constants";
+import { Colors } from '../../constants/Colors';
+
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -23,71 +25,102 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 const TabLayout = () => {
   return (
-    <>
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: "#FFA001",
+
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: "#FFA001",
+        headerShown: false,
+        tabBarInactiveTintColor: "#CDCDE0",
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: Colors.primary,
+          height: 84,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Home",
           headerShown: false,
-          tabBarInactiveTintColor: "#CDCDE0",
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            //backgroundColor: "#161622",
-            //borderTopWidth: 1,
-            //borderTopColor: "#232533",
-            height: 84,
-          },
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.home}
+              color={color}
+              name="Home"
+              focused={focused}
+            />
+          ),
         }}
-      >
-        <Tabs.Screen
-          name="map"
-          options={{
-            title: "Map",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.map}
-                color={color}
-                name="Map"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="bookmark"
-          options={{
-            title: "Chat",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.chat}
-                color={color}
-                name="Chat"
-                focused={focused}
-              />
-            ),
-          }}
-        />
+      />
 
-        <Tabs.Screen
-          name="create"
-          options={{
-            title: "Create",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.plus}
-                color={color}
-                name="Create"
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        
-      </Tabs>
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Map",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.map}
+              color={color}
+              name="Map"
+              focused={focused}
+            />
+          ),
+        }}
+      />
 
-    </>
+
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.chat}
+              color={color}
+              name="Chat"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="group"
+        options={{
+          title: "Group",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.group}
+              color={color}
+              name="Group"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              icon={icons.profile_circle}
+              color={color}
+              name="Profile"
+              focused={focused}
+            />
+          ),
+        }}
+      />
+
+    </Tabs>
+
   );
 };
 

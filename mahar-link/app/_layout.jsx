@@ -38,6 +38,14 @@ const RootLayout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="screens/OrgScreen/OrgListScreen" options={{ title: 'Organizations' }} />
+      <Stack.Screen name="screens/OrgScreen/OrgDetailScreen" options={{ title: 'Organization Detail' }} />
+      <Stack.Screen 
+        name="screens/ChatScreen/ChattingScreen" 
+        options={({ route }) => ({ title: route.params?.chatTitle || 'Chat' })} 
+      />
+      <Stack.Screen name="screens/ChatScreen/GlobalChatScreen" options={{ title: 'Global Chat' }} />
+      <Stack.Screen name="screens/ChatScreen/GroupChatScreen" options={{ title: 'Group Chat' }} />
     </Stack>
   );
 };

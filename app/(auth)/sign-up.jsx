@@ -1,3 +1,4 @@
+
 // app/(auth)/Login.jsx
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
@@ -73,4 +74,5 @@ const styles = StyleSheet.create({
 });
 
 export default SignUp;
+
 

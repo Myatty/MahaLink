@@ -8,16 +8,14 @@ import { Dimensions } from "react-native";
 import LoginBtm from "../../components/LoginBtm";
 import { Link } from "expo-router";
 
-
 SplashScreen.preventAutoHideAsync();
 const { height } = Dimensions.get("window");
 
 const handleLogin = () => {
-  
   console.log('Email:', email);
   console.log('Password:', password);
-  
 };
+
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

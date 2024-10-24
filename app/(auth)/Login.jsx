@@ -18,6 +18,7 @@ const handleLogin = () => {
   console.log('Password:', password);
   
 };
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

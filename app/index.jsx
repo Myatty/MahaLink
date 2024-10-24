@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StyleSheet,
+
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -64,5 +65,25 @@ const styles = StyleSheet.create({
   contentWrapper: {
     width: "80%",
     marginTop: height * 0.4, // 30% of the screen height
+
+  }
+  ,contentWrapper: {
+    width: "80%",
+    marginTop: height * 0.4, // 30% of the screen height
+
+  },
+  button: {
+    marginTop: 150,
+    //backgroundColor: "#3BFB06", communication = #3BFB06
+    backgroundColor: "#3BFB06",
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 19,
+    fontWeight: "bold",
+
   },
 });

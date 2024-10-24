@@ -1,7 +1,6 @@
 # Mahar Link
 
 ## Project Introduction
-
 Mahar Link aims to enhance communication and coordination among organizations, volunteers, and non-profit entities involved in Myanmar flood relief efforts. Often, supplies are delivered multiple times to the same location while other areas remain underserved due to a lack of systematic communication. This platform provides a centralized solution to ensure efficient distribution of resources, enabling better support and contribution to affected areas.
 
 ## Main Contributors
@@ -67,3 +66,4 @@ Mahar Link aims to enhance communication and coordination among organizations, v
     - Once approved, your changes will be merged into the main repository.
 
 Thank you for contributing to our project!
+

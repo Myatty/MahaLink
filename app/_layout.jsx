@@ -47,6 +47,7 @@ const RootLayout = () => {
       />
       <Stack.Screen name="screens/ChatScreen/GlobalChatScreen" options={{ title: 'Global Chat' }} />
       <Stack.Screen name="screens/ChatScreen/GroupChatScreen" options={{ title: 'Group Chat' }} />
+      <Stack.Screen name="screens/NotificationScreen/NotificationCenterScreen" options={{ title: 'Notifications' }} />
 
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)/Login" options={{ headerShown: false }} />

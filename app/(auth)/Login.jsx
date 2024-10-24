@@ -1,4 +1,3 @@
-
 // app/(auth)/Login.jsx
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
@@ -9,18 +8,21 @@ import { Dimensions } from "react-native";
 import LoginBtm from "../../components/LoginBtm";
 import { Link } from "expo-router";
 
+
 SplashScreen.preventAutoHideAsync();
 const { height } = Dimensions.get("window");
 
 const handleLogin = () => {
+  
   console.log('Email:', email);
   console.log('Password:', password);
+  
 };
 
-const SignUp = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+
   return (
     <SafeAreaView className="bg-updatedBg h-full">
       <View className="w-full items-center min-h-[85vh]">
@@ -31,14 +33,11 @@ const SignUp = () => {
             </Text>
           </View>
           <View style={styles.contentWrapper}>
-            <Text className="text-3xl text-white font-bold text-center pb-4" style={{ color: "#347928" }}>Register</Text> 
+            <Text className="text-3xl text-white font-bold text-center pb-4" style={{ color: "#347928" }}>Login</Text> 
             <TextInput className=""style={styles.input} onChangeText={setEmail} value={email} placeholder="Email" keyboardType="email-address"/>
             <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry/>
-            <TextInput style={styles.input} placeholder="Confirm Password" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry/>
-            <View style={styles.btmContainer}>
-              <LoginBtm title={"Back"} onPress={handleLogin} containerStyles={styles.customButton} />
-              <LoginBtm title={"Continue"} onPress={handleLogin} containerStyles={styles.customButton} />
-            </View>
+            <Text className="text-center p-3">If you dont have an account, click <Link href="sign-up" style={{ color: "#347928" }}>Sign up</Link> here</Text>
+            <LoginBtm title={"Login"} onPress={handleLogin} containerStyles={styles.customButton} />
           </View>
       </View>
     </SafeAreaView>
@@ -65,14 +64,7 @@ const styles = StyleSheet.create({
     width: '40%',        
     alignSelf: 'center',  
   },
-  btmContainer:{
-    paddingTop:30,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-       
-  }
 });
 
-export default SignUp;
-
+export default Login;
 

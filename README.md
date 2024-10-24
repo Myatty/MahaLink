@@ -20,11 +20,6 @@ To create a centralized communication platform that ensures efficient and equita
 
 To enhance coordination among organizations, volunteers, and non-profits, preventing redundant supply deliveries and ensuring all affected areas receive the necessary support.
 
-
-
-
-
-
 ### To Contribute
 
 **go to the `develop` branch and read how**

@@ -88,22 +88,6 @@ const TabLayout = () => {
       />
 
       <Tabs.Screen
-        name="group"
-        options={{
-          title: "Group",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.group}
-              color={color}
-              name="Group"
-              focused={focused}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",

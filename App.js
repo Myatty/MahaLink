@@ -1,5 +1,8 @@
+// app.js
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { auth } from './firebaseConfig'; // Import auth only
 
 export default function App() {
   return (

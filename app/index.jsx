@@ -1,7 +1,6 @@
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import {
-  Image,
   ScrollView,
   View,
   Text,
@@ -25,8 +24,9 @@ export default function App() {
   return (
     <SafeAreaView className="bg-updatedBg h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="w-full items-center min-h-[85vh]">
 
+        {/* welcome view  */}
+        <View className="w-full items-center min-h-[85vh]">
           <View style={styles.brandText} className="absolute top-3">
             <Text
               className="text-3xl font-bold text-left"
@@ -41,7 +41,6 @@ export default function App() {
           <View style={styles.contentWrapper}>
             <Text
               className="text-4xl text-white font-bold text-left"
-
               style={{ lineHeight: 55, fontWeight: "900" }}
             >
               Seamless <Text style={{ color: "#347928" }}>Communication</Text>
@@ -49,13 +48,15 @@ export default function App() {
             </Text>
             <CustomButton
               title="Go to Login"
-              handlePress={() => router.push("/(auth)/Login")} 
+              handlePress={() => router.push("/(auth)/Login")}
               containerStyles="w-full mt-7 "
             />
           </View>
         </View>
+
       </ScrollView>
 
+      {/* status bar  */}
       <StatusBar backgroundColor="#181716" style="light" />
     </SafeAreaView>
   );
@@ -87,5 +88,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 19,
     fontWeight: "bold",
+
   },
 });

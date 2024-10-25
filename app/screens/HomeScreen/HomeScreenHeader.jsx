@@ -1,9 +1,13 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 
 export default function HomeScreenHeader() {
+
+    const router = useRouter();
+
     return (
         // outer container 
         <View style={{ padding: 10, }}>
@@ -21,7 +25,7 @@ export default function HomeScreenHeader() {
                     </View>
                 </View>
                 {/* nofification icon  */}
-                <FontAwesome name="bell" size={24} color={Colors.white} style={styles.notificationIcon} />
+                <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.white} style={styles.notificationIcon} />
             </View>
         </View>
     )

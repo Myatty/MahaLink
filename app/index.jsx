@@ -24,6 +24,8 @@ export default function App() {
   return (
     <SafeAreaView className="bg-updatedBg h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
+
+        {/* welcome view  */}
         <View className="w-full items-center min-h-[85vh]">
           <View style={styles.brandText} className="absolute top-3">
             <Text
@@ -46,13 +48,15 @@ export default function App() {
             </Text>
             <CustomButton
               title="Go to Login"
-              handlePress={() => router.push("/(auth)/Login")} 
+              handlePress={() => router.push("/(auth)/Login")}
               containerStyles="w-full mt-7 "
             />
           </View>
         </View>
+
       </ScrollView>
 
+      {/* status bar  */}
       <StatusBar backgroundColor="#181716" style="light" />
     </SafeAreaView>
   );

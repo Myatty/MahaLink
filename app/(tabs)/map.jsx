@@ -26,7 +26,7 @@ const Map = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newPinLocation, setNewPinLocation] = useState(null);
   const mapRef = useRef(null);
-  const [floodRisk, setFloodRisk] = useState(false); 
+  const [floodRisk, setFloodRisk] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -124,7 +124,7 @@ const Map = () => {
       }
     }
   };
-  
+
   const handlePinPress = (pin) => {
     setSelectedPin(pin);
   };
@@ -180,7 +180,9 @@ const Map = () => {
                 <Callout>
                   <View style={styles.callout}>
                     <Text style={styles.calloutTitle}>Weather Data</Text>
-                    {weatherData && weatherData.list && weatherData.list.length > 0 ? (
+                    {weatherData &&
+                    weatherData.list &&
+                    weatherData.list.length > 0 ? (
                       <View style={styles.weatherContainer}>
                         {weatherData.list[0].main && (
                           <Text style={styles.weatherText}>
@@ -190,7 +192,8 @@ const Map = () => {
                         {weatherData.list[0].weather &&
                           weatherData.list[0].weather[0] && (
                             <Text style={styles.weatherText}>
-                              Weather: {weatherData.list[0].weather[0].description}
+                              Weather:{" "}
+                              {weatherData.list[0].weather[0].description}
                             </Text>
                           )}
                         {weatherData.city && (
@@ -198,7 +201,7 @@ const Map = () => {
                             Township: {weatherData.city.name}
                           </Text>
                         )}
-                        
+
                         <Text style={styles.weatherText}>
                           Flood Risk Level: {floodRisk ? "High" : "Low"}
                         </Text>
@@ -207,7 +210,9 @@ const Map = () => {
                         </Text>
                       </View>
                     ) : (
-                      <Text style={styles.weatherText}>No weather data available.</Text>
+                      <Text style={styles.weatherText}>
+                        No weather data available at the moment! Please Retry.
+                      </Text>
                     )}
                   </View>
                 </Callout>
@@ -217,13 +222,20 @@ const Map = () => {
             {pinData.map((pin, index) => (
               <Marker
                 key={index}
-                coordinate={{ latitude: pin.latitude, longitude: pin.longitude }}
+                coordinate={{
+                  latitude: pin.latitude,
+                  longitude: pin.longitude,
+                }}
                 title={pin.type}
-                pinColor={pin.type === "Going to donate food" ? "orange" : pin.type === "Going to donate medicine" ? "green" : "blue"} // Change pin color based on type
+                pinColor={
+                  pin.type === "Going to donate food"
+                    ? "orange"
+                    : pin.type === "Going to donate medicine"
+                    ? "green"
+                    : "blue"
+                } // Change pin color based on type
                 onPress={() => handlePinPress(pin)}
-              >
-                
-              </Marker>
+              ></Marker>
             ))}
           </MapView>
 
@@ -232,7 +244,7 @@ const Map = () => {
             style={[styles.button, styles.normalButton]}
             onPress={() => {
               setPinningMode(false);
-              setMarker(null); 
+              setMarker(null);
             }}
           >
             <Text style={styles.buttonText}>Normal Marker Mode</Text>
@@ -243,8 +255,7 @@ const Map = () => {
             style={[styles.button, styles.donationButton]}
             onPress={() => {
               setPinningMode(true);
-              setMarker(null); 
-              
+              setMarker(null);
             }}
           >
             <Text style={styles.buttonText}>Enable Donation Pinning Mode</Text>
@@ -264,26 +275,33 @@ const Map = () => {
             transparent={true}
             animationType="slide"
           >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>
-                  Select Donation Type
-                </Text>
-                <Button
-                  title="Going to donate food"
-                  onPress={() => selectDonationType("Going to donate food")}
-                />
-                <Button
-                  title="Going to donate medicine"
-                  onPress={() => selectDonationType("Going to donate medicine")}
-                />
-                <Button
-                  title="Going to donate clothes"
-                  onPress={() => selectDonationType("Going to donate clothes")}
-                />
-                <Button title="Cancel" onPress={() => setModalVisible(false)} />
-              </View>
-            </View>
+        
+<View style={styles.modalContainer}>
+  <View style={styles.modalContent}>
+    <Text style={styles.modalTitle}>Select Donation Type</Text>
+    <View style={styles.buttonSpacing}>
+      <Button
+        title="Going to donate food"
+        onPress={() => selectDonationType("Going to donate food")}
+      />
+    </View>
+    <View style={styles.buttonSpacing}>
+      <Button
+        title="Going to donate medicine"
+        onPress={() => selectDonationType("Going to donate medicine")}
+      />
+    </View>
+    <View style={styles.buttonSpacing}>
+      <Button
+        title="Going to donate clothes"
+        onPress={() => selectDonationType("Going to donate clothes")}
+      />
+    </View>
+    <TouchableOpacity onPress={() => setModalVisible(false)}>
+      <Text style={styles.cancelText}>Cancel</Text>
+    </TouchableOpacity>
+  </View>
+</View>
           </Modal>
         </>
       )}
@@ -299,20 +317,25 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  weatherContainer: {
-    padding: 10,
-    backgroundColor: "white",
-  },
-  weatherText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
   callout: {
-    width: 150,
+    width: 200,  // Increase the width to better fit the text
   },
   calloutTitle: {
     fontWeight: "bold",
     fontSize: 16,
+    textAlign: 'center',
+  },
+  
+  weatherContainer: {
+    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 8,
+    width: "100%", // Ensure the container fills the updated width of the callout
+  },
+  weatherText: {
+    fontSize: 16,
+    marginBottom: 5,
+    
   },
   button: {
     position: "absolute",
@@ -350,6 +373,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
+  },
+  buttonSpacing: {
+    marginBottom: 10, // Spacing between buttons
+  },
+  titleSpacing: {
+    marginBottom: 20, // Space between title and first button
+  },
+  cancelText: {
+    color: "red",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 10, // Adjust to add space above the cancel text
   },
 });
 

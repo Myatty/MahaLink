@@ -13,6 +13,9 @@ import MapView, { Circle, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore"; // Update import from addDoc to setDoc
 
 const Map = () => {
   const [location, setLocation] = useState(null);
@@ -27,6 +30,9 @@ const Map = () => {
   const [newPinLocation, setNewPinLocation] = useState(null);
   const mapRef = useRef(null);
   const [floodRisk, setFloodRisk] = useState(false);
+  const [township, setTownship] = useState(""); // Initialize as empty string or use appropriate initial value
+  const [userId, setUserId] = useState(""); // Initialize with current user's ID
+  const [userName, setUserName] = useState("Sam");
 
   useEffect(() => {
     (async () => {
@@ -41,6 +47,30 @@ const Map = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          console.log("User is signed in:", user.uid);
+          const userRef = doc(db, "Users", user.uid); // Reference to the user's document
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            console.log("Fetched user data:", userData);
+            setUserName(userData.name || "Sam"); // Use userData.name
+          } else {
+            console.log("No such document!");
+          }
+        } else {
+          console.log("No user is currently signed in.");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
   const centerMap = () => {
     if (location && mapRef.current) {
       mapRef.current.animateToRegion(
@@ -71,13 +101,28 @@ const Map = () => {
       await fetchWeatherData(latitude, longitude);
     }
   };
-
   const selectDonationType = async (type) => {
-    const newPin = { ...newPinLocation, type };
-    setPinData([...pinData, newPin]);
+    const newPin = {
+      latitude: newPinLocation.latitude,
+      longitude: newPinLocation.longitude,
+      type,
+      township: township || "Unknown Township", // Ensure it has a fallback
+      userId: userName || "Anonymous User", // Ensure it has a fallback
+      createdAt: new Date().toISOString(), // Ensure it's a proper timestamp
+    };
+
+    console.log("New Pin Data:", newPin); // Debugging: check data before sending
+
+    // Save pin data to Firestore
+    const db = getFirestore();
+    try {
+      await addDoc(collection(db, "Markers"), newPin);
+      setPinData([...pinData, newPin]);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
 
     await fetchWeatherData(newPin.latitude, newPin.longitude, newPin);
-
     setModalVisible(false);
     setPinningMode(false);
   };
@@ -110,6 +155,11 @@ const Map = () => {
       );
       const data = response.data;
       setWeatherData(data);
+
+      if (data.city && data.city.name) {
+        setTownship(data.city.name);
+      }
+
       const floodRiskDetected = analyzeFloodRisk(data);
       setFloodRisk(floodRiskDetected);
       if (floodRiskDetected) {
@@ -275,33 +325,36 @@ const Map = () => {
             transparent={true}
             animationType="slide"
           >
-        
-<View style={styles.modalContainer}>
-  <View style={styles.modalContent}>
-    <Text style={styles.modalTitle}>Select Donation Type</Text>
-    <View style={styles.buttonSpacing}>
-      <Button
-        title="Going to donate food"
-        onPress={() => selectDonationType("Going to donate food")}
-      />
-    </View>
-    <View style={styles.buttonSpacing}>
-      <Button
-        title="Going to donate medicine"
-        onPress={() => selectDonationType("Going to donate medicine")}
-      />
-    </View>
-    <View style={styles.buttonSpacing}>
-      <Button
-        title="Going to donate clothes"
-        onPress={() => selectDonationType("Going to donate clothes")}
-      />
-    </View>
-    <TouchableOpacity onPress={() => setModalVisible(false)}>
-      <Text style={styles.cancelText}>Cancel</Text>
-    </TouchableOpacity>
-  </View>
-</View>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Select Donation Type</Text>
+                <View style={styles.buttonSpacing}>
+                  <Button
+                    title="Going to donate food"
+                    onPress={() => selectDonationType("Going to donate food")}
+                  />
+                </View>
+                <View style={styles.buttonSpacing}>
+                  <Button
+                    title="Going to donate medicine"
+                    onPress={() =>
+                      selectDonationType("Going to donate medicine")
+                    }
+                  />
+                </View>
+                <View style={styles.buttonSpacing}>
+                  <Button
+                    title="Going to donate clothes"
+                    onPress={() =>
+                      selectDonationType("Going to donate clothes")
+                    }
+                  />
+                </View>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </Modal>
         </>
       )}
@@ -318,14 +371,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   callout: {
-    width: 200,  // Increase the width to better fit the text
+    width: 200, // Increase the width to better fit the text
   },
   calloutTitle: {
     fontWeight: "bold",
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
-  
+
   weatherContainer: {
     padding: 10,
     backgroundColor: "white",
@@ -335,7 +388,6 @@ const styles = StyleSheet.create({
   weatherText: {
     fontSize: 16,
     marginBottom: 5,
-    
   },
   button: {
     position: "absolute",

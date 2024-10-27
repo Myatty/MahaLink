@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Modal,
+  Button,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import MapView, { Circle, Marker } from "react-native-maps";
+import MapView, { Circle, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
@@ -18,8 +20,13 @@ const Map = () => {
   const [radius, setRadius] = useState(150);
   const [marker, setMarker] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
-  const [floodRisk, setFloodRisk] = useState(false);
+  const [pinningMode, setPinningMode] = useState(false);
+  const [pinData, setPinData] = useState([]);
+  const [selectedPin, setSelectedPin] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newPinLocation, setNewPinLocation] = useState(null);
   const mapRef = useRef(null);
+  const [floodRisk, setFloodRisk] = useState(false); 
 
   useEffect(() => {
     (async () => {
@@ -55,12 +62,25 @@ const Map = () => {
 
   const handleMapPress = async (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
-    setMarker({ latitude, longitude });
-    await fetchWeatherData(latitude, longitude);
+
+    if (pinningMode) {
+      setNewPinLocation({ latitude, longitude });
+      setModalVisible(true);
+    } else {
+      setMarker({ latitude, longitude });
+      await fetchWeatherData(latitude, longitude);
+    }
   };
 
-  // Flood risk analysis function
-  // pop = Probability of Precipitation(a metric that indicates the likelihood of precipitation occurring at a specific location and time)
+  const selectDonationType = async (type) => {
+    const newPin = { ...newPinLocation, type };
+    setPinData([...pinData, newPin]);
+
+    await fetchWeatherData(newPin.latitude, newPin.longitude, newPin);
+
+    setModalVisible(false);
+    setPinningMode(false);
+  };
 
   const analyzeFloodRisk = (weatherData) => {
     let highRainfallCount = 0;
@@ -81,47 +101,32 @@ const Map = () => {
     return highRainfallCount >= 3;
   };
 
-  const fetchWeatherData = async (lat, lon) => {
+  const fetchWeatherData = async (lat, lon, retries = 3) => {
     try {
       const apiKey = "9fa7908f1082d055d948753d170644a0";
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`,
-        50000 // Use metric units for temperature
+        { timeout: 10000 }
       );
       const data = response.data;
-
       setWeatherData(data);
       const floodRiskDetected = analyzeFloodRisk(data);
       setFloodRisk(floodRiskDetected);
-
       if (floodRiskDetected) {
         alert("Flood risk detected! Please stay alert.");
       }
     } catch (error) {
-      console.error("Error fetching weather data:", error);
+      if (retries > 0) {
+        console.warn(`Retrying... (${3 - retries} retries left)`);
+        await fetchWeatherData(lat, lon, retries - 1);
+      } else {
+        console.error("Error fetching weather data:", error);
+      }
     }
-
-    // mock data
-    /*
-    const mockData = {
-      list: [
-        { pop: 0.7, main: { humidity: 85, temp: 30 }, weather: [{ description: "Clear sky" }] },
-        { pop: 0.8, main: { humidity: 88, temp: 29 }, weather: [{ description: "Partly cloudy" }] },
-        { pop: 0.9, main: { humidity: 90, temp: 28 }, weather: [{ description: "Rain" }] },
-        { pop: 0.7, main: { humidity: 84, temp: 27 }, weather: [{ description: "Light rain" }] },
-        { pop: 0.75, main: { humidity: 86, temp: 26 }, weather: [{ description: "Overcast clouds" }] },
-      ],
-      city: { name: "Test City" },
-    };
-
-    setWeatherData(mockData);
-    const floodRiskDetected = analyzeFloodRisk(mockData);
-    setFloodRisk(floodRiskDetected);
-
-    if (floodRiskDetected) {
-      alert("Flood risk detected! Please stay alert.");
-    }
-    */
+  };
+  
+  const handlePinPress = (pin) => {
+    setSelectedPin(pin);
   };
 
   if (errorMsg) {
@@ -171,10 +176,81 @@ const Map = () => {
             />
 
             {marker && (
-              <Marker coordinate={marker} title={"Selected Location"} />
+              <Marker coordinate={marker}>
+                <Callout>
+                  <View style={styles.callout}>
+                    <Text style={styles.calloutTitle}>Weather Data</Text>
+                    {weatherData && weatherData.list && weatherData.list.length > 0 ? (
+                      <View style={styles.weatherContainer}>
+                        {weatherData.list[0].main && (
+                          <Text style={styles.weatherText}>
+                            Temperature: {weatherData.list[0].main.temp} °C
+                          </Text>
+                        )}
+                        {weatherData.list[0].weather &&
+                          weatherData.list[0].weather[0] && (
+                            <Text style={styles.weatherText}>
+                              Weather: {weatherData.list[0].weather[0].description}
+                            </Text>
+                          )}
+                        {weatherData.city && (
+                          <Text style={styles.weatherText}>
+                            Township: {weatherData.city.name}
+                          </Text>
+                        )}
+                        
+                        <Text style={styles.weatherText}>
+                          Flood Risk Level: {floodRisk ? "High" : "Low"}
+                        </Text>
+                        <Text style={styles.weatherText}>
+                          Current Humidity: {weatherData.list[0].main.humidity}%
+                        </Text>
+                      </View>
+                    ) : (
+                      <Text style={styles.weatherText}>No weather data available.</Text>
+                    )}
+                  </View>
+                </Callout>
+              </Marker>
             )}
+
+            {pinData.map((pin, index) => (
+              <Marker
+                key={index}
+                coordinate={{ latitude: pin.latitude, longitude: pin.longitude }}
+                title={pin.type}
+                pinColor={pin.type === "Going to donate food" ? "orange" : pin.type === "Going to donate medicine" ? "green" : "blue"} // Change pin color based on type
+                onPress={() => handlePinPress(pin)}
+              >
+                
+              </Marker>
+            ))}
           </MapView>
 
+          {/* Button for Normal Marker Mode */}
+          <TouchableOpacity
+            style={[styles.button, styles.normalButton]}
+            onPress={() => {
+              setPinningMode(false);
+              setMarker(null); 
+            }}
+          >
+            <Text style={styles.buttonText}>Normal Marker Mode</Text>
+          </TouchableOpacity>
+
+          {/* Button for Donation Pinning Mode */}
+          <TouchableOpacity
+            style={[styles.button, styles.donationButton]}
+            onPress={() => {
+              setPinningMode(true);
+              setMarker(null); 
+              
+            }}
+          >
+            <Text style={styles.buttonText}>Enable Donation Pinning Mode</Text>
+          </TouchableOpacity>
+
+          {/* Button to Center Map */}
           <TouchableOpacity style={styles.button} onPress={centerMap}>
             <Image
               source={require("../../assets/images/location.png")}
@@ -182,42 +258,33 @@ const Map = () => {
             />
           </TouchableOpacity>
 
-          {weatherData && weatherData.list && weatherData.list.length > 0 ? (
-            <View style={styles.weatherContainer}>
-              {weatherData.list[0].main && (
-                <Text style={styles.weatherText}>
-                  Temperature: {weatherData.list[0].main.temp} °C
+          {/* Modal for selecting donation type */}
+          <Modal
+            visible={modalVisible}
+            transparent={true}
+            animationType="slide"
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>
+                  Select Donation Type
                 </Text>
-              )}
-              {weatherData.list[0].weather &&
-                weatherData.list[0].weather[0] && (
-                  <Text style={styles.weatherText}>
-                    Weather: {weatherData.list[0].weather[0].description}
-                  </Text>
-                )}
-              {weatherData.city && (
-                <Text style={styles.weatherText}>
-                  Township: {weatherData.city.name}
-                </Text>
-              )}
-              {/* New Data Points */}
-              <Text style={styles.weatherText}>
-                Flood Risk Level: {floodRisk ? "High" : "Low"}
-              </Text>
-              {/* <Text style={styles.weatherText}>
-                Probability of Flood Occurrence: {floodRisk ? "80%" : "0.5%"}
-              </Text>
-              <Text style={styles.weatherText}>
-                Expected Rainfall: 50 mm (Next 24 hours)
-              </Text> */}
-              <Text style={styles.weatherText}>
-                Current Humidity: {weatherData.list[0].main.humidity}%
-              </Text>
-              
+                <Button
+                  title="Going to donate food"
+                  onPress={() => selectDonationType("Going to donate food")}
+                />
+                <Button
+                  title="Going to donate medicine"
+                  onPress={() => selectDonationType("Going to donate medicine")}
+                />
+                <Button
+                  title="Going to donate clothes"
+                  onPress={() => selectDonationType("Going to donate clothes")}
+                />
+                <Button title="Cancel" onPress={() => setModalVisible(false)} />
+              </View>
             </View>
-          ) : (
-            <Text style={styles.weatherText}>No weather data available.</Text>
-          )}
+          </Modal>
         </>
       )}
       <StatusBar style="auto" />
@@ -226,32 +293,64 @@ const Map = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  map: { width: "100%", height: "100%" },
+  container: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
+  weatherContainer: {
+    padding: 10,
+    backgroundColor: "white",
+  },
+  weatherText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  callout: {
+    width: 150,
+  },
+  calloutTitle: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
   button: {
     position: "absolute",
-    bottom: 30,
-    right: "10%",
-    backgroundColor: "#FFFF",
-    borderRadius: 100,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    bottom: 60,
+    left: 20,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 3,
+  },
+  normalButton: {
+    bottom: 120,
+  },
+  donationButton: {
+    bottom: 80,
+  },
+  buttonImage: {
+    width: 25,
+    height: 25,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
     elevation: 5,
   },
-  buttonImage: { width: 25, height: 25 },
-  weatherContainer: {
-    position: "absolute",
-    bottom: 100,
-    left: 10,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    padding: 10,
-    borderRadius: 10,
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
-  weatherText: { fontSize: 16, color: "#333" },
 });
 
 export default Map;

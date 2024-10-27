@@ -32,7 +32,7 @@ export default function App() {
               className="text-3xl font-bold text-left"
               style={{ fontWeight: "900" }}
             >
-              <Text className="text-[#FEFEFE]">Maha</Text> {/* Color "Maha" */}
+              <Text className="text-[#FEFEFE]">Maha</Text> 
               <Text className="text-[#347928]"> Link</Text>
             </Text>
           </View>
@@ -47,7 +47,7 @@ export default function App() {
               {"\n"}for rapid{"\n"}Emergency{"\n"}Response
             </Text>
             <CustomButton
-              title="Go to Login"
+              title="Continue"
               handlePress={() => router.push("/(auth)/Login")}
               containerStyles="w-full mt-7 "
             />
@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     width: "80%",
-    marginTop: height * 0.4, // 30% of the screen height
+    marginTop: height * 0.4, 
 
   }
   ,contentWrapper: {
     width: "80%",
-    marginTop: height * 0.4, // 30% of the screen height
+    marginTop: height * 0.4, 
 
   },
   button: {

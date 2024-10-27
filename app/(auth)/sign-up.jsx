@@ -6,6 +6,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig"; 
 import { useRouter } from "expo-router"; 
 import Icon from "react-native-vector-icons/Ionicons"; 
+import { db } from "../../firebaseConfig"; 
+import { doc, setDoc } from "firebase/firestore"; // Update import from addDoc to setDoc
 
 const { height } = Dimensions.get("window");
 
@@ -25,9 +27,17 @@ const SignUp = () => {
     }
 
     try {
+      // Create a new user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("User registered: ", user);
+  
+      // Store additional user information in Firestore with UID as document ID
+      await setDoc(doc(db, "Users", user.uid), {
+        email: user.email,
+        name: name,
+      });
+  
       alert("Registration successful!");
       router.push("../(auth)/Login"); 
     } catch (error) {
@@ -102,9 +112,9 @@ const SignUp = () => {
                 <Link href="/(auth)/Login" style={styles.customButton}>
                   <Text style={styles.linkText}>Back</Text>
                 </Link>
-                <Link href="/(auth)/Login" style={styles.customButton}>
-                  <Text style={styles.linkText} onPress={handleSignUp}>Continue</Text>
-                </Link>
+                <TouchableOpacity style={styles.customButton} onPress={handleSignUp}>
+                  <Text style={styles.linkText}>Continue</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

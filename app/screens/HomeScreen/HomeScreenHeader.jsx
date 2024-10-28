@@ -7,7 +7,7 @@ import { auth, db } from "../../../firebaseConfig";
 
 export default function HomeScreenHeader() {
     const [organizationName, setOrganizationName] = useState('Organization Name');
-    const [userName, setUserName] = useState('Sam');
+    const [userName, setUserName] = useState('Loading');
 
     // Fetch user data from Firestore
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function HomeScreenHeader() {
                     if (userSnap.exists()) {
                         const userData = userSnap.data();
                         console.log("Fetched user data:", userData);
-                        setUserName(userData.name || 'Sam'); // Use userData.name
+                        setUserName(userData.name || 'Loading'); // Use userData.name
                         setOrganizationName(userData.organization || 'Organization Name'); // Ensure organizationName is set
                     } else {
                         console.log("No such document!");

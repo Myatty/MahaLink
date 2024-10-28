@@ -1,5 +1,4 @@
 import {
-  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -15,7 +14,7 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
-import { doc, getDoc } from "firebase/firestore"; // Update import from addDoc to setDoc
+import { onSnapshot, doc, getDoc } from "firebase/firestore";
 
 const Map = () => {
   const [location, setLocation] = useState(null);
@@ -30,9 +29,11 @@ const Map = () => {
   const [newPinLocation, setNewPinLocation] = useState(null);
   const mapRef = useRef(null);
   const [floodRisk, setFloodRisk] = useState(false);
-  const [township, setTownship] = useState(""); // Initialize as empty string or use appropriate initial value
-  const [userId, setUserId] = useState(""); // Initialize with current user's ID
-  const [userName, setUserName] = useState("Sam");
+  const [township, setTownship] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("...");
+  const [oldPinned, setOldPinned] = useState(null);
+  const [pin, setPin] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -53,12 +54,12 @@ const Map = () => {
         const user = auth.currentUser;
         if (user) {
           console.log("User is signed in:", user.uid);
-          const userRef = doc(db, "Users", user.uid); // Reference to the user's document
+          const userRef = doc(db, "Users", user.uid);
           const userSnap = await getDoc(userRef);
           if (userSnap.exists()) {
             const userData = userSnap.data();
             console.log("Fetched user data:", userData);
-            setUserName(userData.name || "Sam"); // Use userData.name
+            setUserName(userData.name || "Sam");
           } else {
             console.log("No such document!");
           }
@@ -71,6 +72,65 @@ const Map = () => {
     };
     fetchUserData();
   }, []);
+
+  // fetch pinned markers to show globally( doesnt work )
+  useEffect(() => {
+    const fetchPins = async () => {
+      const db = getFirestore();
+      const markersCollection = collection(db, "Markers");
+      const querySnapshot = await getDocs(markersCollection);
+      const pins = querySnapshot.docs.map((doc) => ({
+        id: doc.userId,
+        ...doc.data(),
+      }));
+      setOldPinned(pins);
+      console.log("Old pinned data : ", id);
+    };
+
+    fetchPins();
+  }, []);
+
+  // Fetch all markers from Firestore and update state (this works i guess )
+  useEffect(() => {
+    const db = getFirestore();
+    const markersRef = collection(db, "Markers");
+
+    // Listen for real-time updates from Firestore
+    const unsubscribe = onSnapshot(markersRef, (snapshot) => {
+      const pins = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOldPinned(pins); // Update pinData with all markers from Firestore
+      console.log("Old pinned data 2 : ", pins);
+    });
+
+    // Cleanup on component unmount
+    return () => unsubscribe();
+  }, []);
+
+  // doesnt work
+  useEffect(() => {
+    const fetchOldPinnedUser = async () => {
+      try {
+        const pinDoc = await firestore()
+          .collection("Markers")
+          .doc(pin.id)
+          .get(); // Adjust collection and doc ID as needed
+        if (pinDoc.exists) {
+          const pinData = pinDoc.data();
+          setOldPinned(pinData.pinnedBy); // assuming `pinnedBy` contains the original user's name
+        }
+      } catch (error) {
+        console.error("Error fetching pinned user data:", error);
+      }
+    };
+
+    if (pin) {
+      fetchOldPinnedUser();
+    }
+  }, [pin]);
+
   const centerMap = () => {
     if (location && mapRef.current) {
       mapRef.current.animateToRegion(
@@ -101,28 +161,25 @@ const Map = () => {
       await fetchWeatherData(latitude, longitude);
     }
   };
+
   const selectDonationType = async (type) => {
     const newPin = {
       latitude: newPinLocation.latitude,
       longitude: newPinLocation.longitude,
       type,
-      township: township || "Unknown Township", // Ensure it has a fallback
-      userId: userName || "Anonymous User", // Ensure it has a fallback
-      createdAt: new Date().toISOString(), // Ensure it's a proper timestamp
+      township: township || "Unknown Township",
+      pinnedBy: userName || "Anonymous User", // Use userName when saving the pin
+      createdAt: new Date().toISOString(),
     };
 
-    console.log("New Pin Data:", newPin); // Debugging: check data before sending
-
-    // Save pin data to Firestore
-    const db = getFirestore();
     try {
+      const db = getFirestore();
       await addDoc(collection(db, "Markers"), newPin);
       setPinData([...pinData, newPin]);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
 
-    await fetchWeatherData(newPin.latitude, newPin.longitude, newPin);
     setModalVisible(false);
     setPinningMode(false);
   };
@@ -202,7 +259,31 @@ const Map = () => {
             }}
             onRegionChangeComplete={handleRegionChange}
             onPress={handleMapPress}
-          >
+          >{oldPinned.map((pin, index) => (
+            <Marker
+              key={index}
+              coordinate={{ latitude: pin.latitude, longitude: pin.longitude }}
+              title={pin.type}
+              pinColor={
+                pin.type === "Going to donate food"
+                  ? "orange"
+                  : pin.type === "Going to donate medicine"
+                  ? "green"
+                  : "blue"
+              }
+              onPress={() => handlePinPress(pin)}
+            >
+              <Callout>
+                <View style={styles.callout}>
+                  <Text style={styles.calloutTitle}>Donation Type: {pin.type}</Text>
+                  <Text style={styles.weatherText}>Pinned by: {pin.pinnedBy}</Text> 
+                  <Text style={styles.weatherText}>Township: {pin.township || "Unknown"}</Text>
+                  <Text style={styles.weatherText}>Created At: {new Date(pin.createdAt).toLocaleString()}</Text>
+                </View>
+              </Callout>
+            </Marker>
+          ))}
+            
             <Circle
               center={{
                 latitude: location.latitude,
@@ -283,9 +364,31 @@ const Map = () => {
                     : pin.type === "Going to donate medicine"
                     ? "green"
                     : "blue"
-                } // Change pin color based on type
+                }
                 onPress={() => handlePinPress(pin)}
-              ></Marker>
+              >
+                <Callout>
+                  <View style={styles.callout}>
+                    <Text style={styles.calloutTitle}>
+                      Donation Type:{" "}
+                      {pin.type === "Going to donate food"
+                        ? "Food"
+                        : pin.type === "Going to donate medicine"
+                        ? "Medicine"
+                        : "Clothes"}
+                    </Text>
+                    <Text style={styles.weatherText}>
+                      Pinned by: {userName}
+                    </Text>
+                    <Text style={styles.weatherText}>
+                      Township: {pin.township || "Unknown"}
+                    </Text>
+                    <Text style={styles.weatherText}>
+                      Created At: {new Date(pin.createdAt).toLocaleString()}
+                    </Text>
+                  </View>
+                </Callout>
+              </Marker>
             ))}
           </MapView>
 
@@ -371,7 +474,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   callout: {
-    width: 200, // Increase the width to better fit the text
+    width: 200,
   },
   calloutTitle: {
     fontWeight: "bold",
@@ -383,7 +486,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     borderRadius: 8,
-    width: "100%", // Ensure the container fills the updated width of the callout
+    width: "100%",
   },
   weatherText: {
     fontSize: 16,
@@ -428,17 +531,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonSpacing: {
-    marginBottom: 10, // Spacing between buttons
+    marginBottom: 10,
   },
   titleSpacing: {
-    marginBottom: 20, // Space between title and first button
+    marginBottom: 20,
   },
   cancelText: {
     color: "red",
     fontSize: 16,
     textAlign: "center",
-    marginTop: 10, // Adjust to add space above the cancel text
+    marginTop: 10,
   },
 });
 
 export default Map;
+

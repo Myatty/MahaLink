@@ -73,8 +73,7 @@ export default function Chat() {
                     <Text style={styles.sectionText}>Global Chat</Text>
                 </View>
                 <ChartCard organizationName="Global" message="Message from Global Chat" type="global" profileImage={require('../../assets/images/profile.png')} />
-
-                {/* Dynamic Township Group Chats */}
+git                 {/* Dynamic Township Group Chats */}
                 <View style={styles.sectionHeader}>
                     <FontAwesome name="users" size={15} color={Colors.primary} style={styles.notificationIcon} />
                     <Text style={styles.sectionText}>Group Chat</Text>

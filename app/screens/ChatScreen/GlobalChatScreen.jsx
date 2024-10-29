@@ -9,6 +9,7 @@ const initialMessages = [
   // ... other messages
 ];
 
+// This Screen is useless
 export default function ChattingScreen() {
   const route = useRoute();
   const navigation = useNavigation();
@@ -37,30 +38,25 @@ export default function ChattingScreen() {
       setInputText('');
     }
   };
-
-  const renderItem = ({ item }) => (
-    <View style={[styles.messageWrapper, item.sender === 'user' ? styles.userWrapper : styles.otherWrapper]}>
-      {item.sender === 'other' && (
-        <Image source={{ uri: item.profileImage }} style={styles.profileImage} />
-      )}
-      <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 200 }}>
-        <View style={[styles.messageContainer, item.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-          <View style={styles.messageContent}>
-            <Text style={styles.messageText}>{item.text}</Text>
-            <Text style={styles.messageTime}>{item.time}</Text>
-          </View>
+// Inside the renderItem function
+const renderItem = ({ item }) => (
+  <View style={[styles.messageWrapper, item.sentBy === organizationName ? styles.userWrapper : styles.otherWrapper]}>
+    {item.sentBy !== organizationName && (
+      <Image source={{ uri: item.profileImage || 'https://placehold.co/400' }} style={styles.profileImage} />
+    )}
+    <View style={{ flexDirection: 'column', alignItems: item.sentBy === organizationName ? 'flex-end' : 'flex-start', width: '100%' }}>
+      <View style={[styles.messageContainer, item.sentBy === organizationName ? styles.userMessage : styles.otherMessage]}>
+        <View style={styles.messageContent}>
+          <Text style={styles.messageText}>{item.message}</Text>
+          <Text style={styles.messageTime}>{item.timestamp?.toDate().toLocaleTimeString() || ''}</Text>
         </View>
-        {item.sender === 'other' && (
-          <View style={{
-            display: 'flex', justifyContent: 'start', alignItems: 'start',
-            flexDirection: 'column', width: '100%',
-          }}>
-            <Text style={styles.senderName}>{item.senderName}</Text>
-          </View>
-        )}
       </View>
+      {item.sentBy !== organizationName && (
+        <Text style={styles.senderName}>{item.sentBy}</Text>
+      )}
     </View>
-  );
+  </View>
+);
 
   return (
     <KeyboardAvoidingView
@@ -89,6 +85,7 @@ export default function ChattingScreen() {
   );
 }
 
+// Update the styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   messageContainer: {
-    maxWidth: '100%',
+    maxWidth: '70%',  
     borderRadius: 10,
     padding: 10,
   },
@@ -120,16 +117,15 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 40,
     height: 40,
-    borderRadius: 99,
+    borderRadius: 20,
     marginRight: 10,
     borderColor: Colors.primary,
     borderWidth: 2,
   },
   senderName: {
     fontSize: 14,
-    fontWeight: 'thin',
+    fontWeight: '500',  
     marginBottom: 5,
-    marginTop: 5,
   },
   messageContent: {
     maxWidth: '100%',

@@ -8,22 +8,22 @@ export default function chat() {
     return (
         <View style={styles.container}>
 
-            {/* Chart start  */}
-            <Text style={{ color: Colors.Swan, fontWeight: '600', fontSize: 18, marginBottom: 10 }}>Charts</Text>
+            {/* Chat start  */}
+            <Text style={{ color: Colors.Swan, fontWeight: '600', fontSize: 18, marginBottom: 10 }}>Chats</Text>
             <ScrollView>
 
-                {/* Chart Crad start  */}
-                {/* for the global chart  */}
+                {/* Chat Crad start  */}
+                {/* for the global chat  */}
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start', gap: 7, marginBottom: 10 }}>
                     <FontAwesome name="globe" size={15} color={Colors.primary} style={styles.notificationIcon} />
-                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Global Chart</Text>
+                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Global Chat</Text>
                 </View>
                 <ChartCard organizationName="Global" message='mesg from globe' type="global" profileImage={require('../../assets/images/profile.png')} />
 
                 {/* for the team group chart  */}
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start', gap: 7, marginBottom: 10 }}>
                     <FontAwesome name="users" size={15} color={Colors.primary} style={styles.notificationIcon} />
-                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Group Chart</Text>
+                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Group Chat</Text>
                 </View>
                 <ChartCard organizationName="Group (Your Org Name)" message="mesg from group" teamNumber={10} type="group" profileImage={require('../../assets/images/profile.png')} />
 

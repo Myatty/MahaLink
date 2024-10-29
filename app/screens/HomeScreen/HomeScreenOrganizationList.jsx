@@ -34,8 +34,8 @@ export default function HomeScreenOrganizationList() {
                             display: 'flex', flexDirection: 'row', alignItems: 'center',
                             justifyContent: 'start', gap: 5,
                         }}> */}
-                            {/* team number  */}
-                            {/* <View style={{
+                        {/* team number  */}
+                        {/* <View style={{
                                 display: 'flex', flexDirection: 'row', alignItems: 'center',
                                 justifyContent: 'start', gap: 1, color: Colors.Gray, backgroundColor: Colors.Gray,
                                 padding: 3, width: 40, borderRadius: 10, paddingLeft: 8,

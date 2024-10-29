@@ -30,20 +30,20 @@ export default function HomeScreenOrganizationList() {
                             Doh Eain <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} style={{ marginRight: 5 }} />
                         </Text>
 
-                        <View style={{
+                        {/* <View style={{
                             display: 'flex', flexDirection: 'row', alignItems: 'center',
                             justifyContent: 'start', gap: 5,
-                        }}>
+                        }}> */}
                             {/* team number  */}
-                            <View style={{
+                            {/* <View style={{
                                 display: 'flex', flexDirection: 'row', alignItems: 'center',
                                 justifyContent: 'start', gap: 1, color: Colors.Gray, backgroundColor: Colors.Gray,
                                 padding: 3, width: 40, borderRadius: 10, paddingLeft: 8,
                             }}>
                                 <FontAwesome name="user-o" size={13} color={Colors.Swan} style={{ marginRight: 5 }} />
                                 <Text style={{ fontSize: 13, }}>5</Text>
-                            </View>
-                        </View>
+                            </View> */}
+                        {/* </View> */}
 
                     </View>
                 </View>

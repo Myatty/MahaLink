@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Button,
@@ -10,7 +10,6 @@ import {
   Text,
   TextInput,
   View,
-  ActivityIndicator,
 } from "react-native";
 import { Colors } from "../../../constants/Colors";
 import {
@@ -23,33 +22,25 @@ import {
   orderBy,
   doc,
   getDoc,
-  where,
-  getDocs,
 } from "firebase/firestore";
-import { auth } from "../../../firebaseConfig";
-
-const db = getFirestore();
+import { auth, db } from "../../../firebaseConfig";
 
 export default function GroupChatScreen() {
+  const route = useRoute();
   const navigation = useNavigation();
-  const [userName, setUserName] = useState("Loading");
-  const [townshipChats, setTownshipChats] = useState([]);
-  const [selectedTownship, setSelectedTownship] = useState("");
+  const { townshipName } = route.params || {};
+
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState("");
 
-  // go back
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Group Chats",
-      headerLeft: () => (
-        <Button title="Back" onPress={() => navigation.goBack()} />
-      ),
+      title: townshipName,
+      headerBackTitle: "Back",
     });
-  }, [navigation]);
+  }, [navigation, townshipName]);
 
-  // Fetch user data and set userName
   useEffect(() => {
     const fetchUserData = async () => {
       const user = auth.currentUser;
@@ -57,87 +48,48 @@ export default function GroupChatScreen() {
         const userRef = doc(db, "Users", user.uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
-          const userData = userSnap.data();
-          setUserName(userData.name || "Loading");
-          fetchUserTownships(userData.name);
-          console.log('fetch ser : ',userData.name);     
+          setUserName(userSnap.data().name || "Loading");
         }
       }
     };
     fetchUserData();
   }, []);
-  const fetchUserTownships = async (userName) => {
-    console.log('Fetching townships for user:', userName); // Log the username
-  
-    try {
-      const markersQuery = query(
-        collection(db, "Markers"),
-        where("pinnedBy", "==", userName)
-      );
-  
-      // Fetch documents with getDocs, not getDoc
-      const querySnapshot = await getDocs(markersQuery);
-      if (querySnapshot.empty) {
-        console.log("No matching documents found.");
-      } else {
-        const townships = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log("Document data:", data); // Log data to verify it contains expected fields
-  
-          // Existing logic to add townships if the field is found
-          if (data.township && !townships.includes(data.township)) {
-            townships.push(data.township);
-          }
-        });
-  
-        console.log("Final list of townships:", townships); // Log the final list
-        setTownshipChats(townships);
-        if (townships.length > 0) setSelectedTownship(townships[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching townships:", error);
-    }
-  };
-  
 
-  // Fetch and listen to messages in real-time from selected township group
+  // screen title
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: townshipName,
+      headerLeft: () => (
+        <Button title="Back" onPress={() => navigation.goBack()} />
+      ),
+    });
+  }, [navigation]);
+
   useEffect(() => {
-    if (selectedTownship) {
-      const messagesRef = collection(
-        db,
-        `townshipChats/${selectedTownship}/messages`
-      );
-      const messagesQuery = query(messagesRef, orderBy("timestamp", "asc"));
+    const messagesRef = collection(db, "townshipChats", townshipName, "Messages");
+    const q = query(messagesRef, orderBy("timestamp", "asc"));
 
-      const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-        const loadedMessages = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMessages(loadedMessages);
-      });
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setMessages(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })));
+    });
 
-      return unsubscribe;
-    }
-  }, [selectedTownship]);
+    return () => unsubscribe();
+  }, [townshipName]);
 
   const handleSend = async () => {
-    const text = inputText;
-    setInputText("");
-    if (text.trim() && selectedTownship) {
-      try {
-        await addDoc(
-          collection(db, `townshipChats/${selectedTownship}/messages`),
-          {
-            message: text,
-            sentBy: userName,
-            timestamp: serverTimestamp(),
-          }
-        );
-      } catch (error) {
-        console.error("Error sending message:", error);
-      }
+    if (inputText.trim()) {
+      const messagesRef = collection(db, "townshipChats", townshipName, "Messages");
+      await addDoc(messagesRef, {
+        text: inputText,
+        sender: auth.currentUser?.uid,
+        senderName: userName || "You",
+        timestamp: serverTimestamp(),
+        profileImage: "https://placehold.co/400",
+      });
+      setInputText("");
     }
   };
 
@@ -145,35 +97,30 @@ export default function GroupChatScreen() {
     <View
       style={[
         styles.messageWrapper,
-        item.sentBy === userName ? styles.userWrapper : styles.otherWrapper,
+        item.sender === auth.currentUser?.uid ? styles.userWrapper : styles.otherWrapper,
       ]}
     >
-      {item.sentBy !== userName && (
-        <Image
-          source={{ uri: item.profileImage || "https://placehold.co/400" }}
-          style={styles.profileImage}
-        />
+      {item.sender !== auth.currentUser?.uid && (
+        <Image source={{ uri: item.profileImage || "https://placehold.co/400" }} style={styles.profileImage} />
       )}
-      <View
-        style={{
-          flexDirection: "column",
-          alignItems: item.sentBy === userName ? "flex-end" : "flex-start",
-          width: "100%",
-        }}
-      >
-        {item.sentBy !== userName && (
-          <Text style={styles.senderName}>{item.sentBy}</Text>
+      <View style={{
+        flexDirection: "column",
+        alignItems: item.sender === auth.currentUser?.uid ? "flex-end" : "flex-start",
+        width: "100%",
+      }}>
+        {item.sender !== auth.currentUser?.uid && (
+          <Text style={styles.senderName}>{item.senderName}</Text>
         )}
         <View
           style={[
             styles.messageContainer,
-            item.sentBy === userName ? styles.userMessage : styles.otherMessage,
+            item.sender === auth.currentUser?.uid ? styles.userMessage : styles.otherMessage,
           ]}
         >
-          <Text style={styles.messageText}>{item.message}</Text>
-          <Text style={styles.messageTime}>
-            {item.timestamp?.toDate().toLocaleTimeString() || ""}
-          </Text>
+          <View style={styles.messageContent}>
+            <Text style={styles.messageText}>{item.text}</Text>
+            <Text style={styles.messageTime}>{item.timestamp?.toDate().toLocaleTimeString() || ""}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -183,44 +130,18 @@ export default function GroupChatScreen() {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={80}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
-      {loading ? (
-        <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </View>
-      ) : (
-        <>
-          <FlatList
-            data={townshipChats}
-            horizontal
-            renderItem={({ item }) => (
-              <Button
-                title={item}
-                onPress={() => setSelectedTownship(item)}
-                color={item === selectedTownship ? Colors.primary : "gray"}
-              />
-            )}
-            keyExtractor={(item) => item}
-            contentContainerStyle={styles.chatTabsContainer}
-          />
-          <FlatList
-            data={messages}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.chatContainer}
-          />
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              value={inputText}
-              onChangeText={setInputText}
-              placeholder={`Type a message to ${selectedTownship}`}
-            />
-            <Button title="Send" onPress={handleSend} color={Colors.primary} />
-          </View>
-        </>
-      )}
+      <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.id} />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="Type a message"
+        />
+        <Button title="Send" onPress={handleSend} color={Colors.primary} />
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -229,11 +150,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   messageWrapper: {
     flexDirection: "row",
@@ -246,9 +162,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   messageContainer: {
-    maxWidth: "70%",
-    borderRadius: 10,
-    padding: 10,
+    maxWidth: "75%",
+    borderRadius: 15,
+    padding: 12,
   },
   userMessage: {
     backgroundColor: "#DCF8C6",
@@ -264,21 +180,24 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 10,
     borderColor: Colors.primary,
-    borderWidth: 2,
+    borderWidth: 1.5,
   },
   senderName: {
-    fontSize: 14,
-    fontWeight: "500",
-    marginBottom: 5,
+    fontSize: 12,
+    fontWeight: "600",
+    color: "gray",
+    marginBottom: 4,
+    alignSelf: "flex-start",
   },
   messageContent: {
     maxWidth: "100%",
   },
   messageText: {
     fontSize: 16,
+    color: "#333",
   },
   messageTime: {
-    fontSize: 12,
+    fontSize: 10,
     color: "gray",
     marginTop: 5,
   },
@@ -287,7 +206,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 1,
     borderColor: "#ECECEC",
-    paddingBottom: 30,
+    paddingBottom: 20,
     paddingHorizontal: 15,
   },
   input: {
@@ -295,10 +214,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ECECEC",
     borderRadius: 20,
-    paddingHorizontal: 10,
-    marginRight: 10,
-  },
-  chatContainer: {
-    paddingBottom: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
   },
 });

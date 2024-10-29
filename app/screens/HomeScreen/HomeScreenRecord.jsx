@@ -55,14 +55,14 @@ export default function HomeScreenRecord() {
                     <Text
                         style={styles.buttonText}
                         onPress={() => router.push('/(tabs)/map')}>
-                        Explore Map
+                        <FontAwesome name="compass" size={20} color={Colors.Swan} /> Explore Map
                     </Text>
                 </View>
                 <View style={styles.button}>
                     <Text
                         style={styles.buttonText}
                         onPress={() => router.push('/screens/OrgScreen/OrgListScreen')}>
-                        Start Connect
+                        <FontAwesome name="link" size={20} color={Colors.Swan} /> Start Connect
                     </Text>
                 </View>
             </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '48%',
-        backgroundColor: Colors.Skin,
+        backgroundColor: Colors.LightYellow,
         borderRadius: 10,
         padding: 20,
         height: 120,

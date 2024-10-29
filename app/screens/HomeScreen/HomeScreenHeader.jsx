@@ -38,15 +38,15 @@ export default function HomeScreenHeader() {
 
     return (
         <View style={{ padding: 10 }}>
-            <View style={styles.container}>
-                <View style={styles.innerContainer}>
+            <View style={styles.container} className="bg-updatedBg ">
+                <View style={styles.innerContainer} >
                     <Image
                         source={require('../../../assets/images/profile.png')}
                         style={styles.image}
                     />
                     <View>
-                        <Text style={{ color: Colors.white, fontSize: 20, fontWeight: 'bold' }}>{userName}</Text>
-                        <Text style={{ color: Colors.white, fontSize: 15, fontWeight: '400' }}>{organizationName}</Text>
+                        <Text style={{ color: Colors.primaryGreen, fontSize: 20, fontWeight: 'bold' }}>{userName}</Text>
+                        <Text style={{ color: Colors.primaryGreen, fontSize: 15, fontWeight: '400' }}>{organizationName}</Text>
                     </View>
                 </View>
                 <FontAwesome name="bell" size={24} color={Colors.white} style={styles.notificationIcon} />
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: Colors.primary,
+        backgroundColor: Colors.tailwind.updatedBg,
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 20,
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         height: 130,
         width: '100%',
         borderRadius: 25,
+        color: Colors.primaryGreen,
     },
     innerContainer: {
         display: 'flex',

@@ -1,46 +1,111 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../constants/Colors';
 import ChartCard from '../screens/ChatScreen/ChartCard';
+import GroupCard from '../screens/ChatScreen/GroupCard';
+import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase initialized and configured
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 
-export default function chat() {
+export default function Chat() {
+    const [userName, setUserName] = useState("");
+    const [townshipChats, setTownshipChats] = useState([]);
+    const [selectedTownship, setSelectedTownship] = useState("");
+
+    // Fetch user data and set userName
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = doc(db, "Users", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    setUserName(userData.name || "Loading");
+                    fetchUserTownships(userData.name);
+                    console.log('Fetched user:', userData.name);
+                }
+            }
+        };
+        fetchUserData();
+    }, []);
+
+    const fetchUserTownships = async (userName) => {
+        console.log('Fetching townships for user:', userName);
+
+        try {
+            const markersQuery = query(
+                collection(db, "Markers"),
+                where("pinnedBy", "==", userName)
+            );
+
+            const querySnapshot = await getDocs(markersQuery);
+            if (querySnapshot.empty) {
+                console.log("No matching documents found.");
+            } else {
+                const townships = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    console.log("Document data:", data);
+
+                    if (data.township && !townships.includes(data.township)) {
+                        townships.push(data.township);
+                    }
+                });
+
+                console.log("Final list of townships:", townships);
+                setTownshipChats(townships);
+                if (townships.length > 0) setSelectedTownship(townships[0]);
+            }
+        } catch (error) {
+            console.error("Error fetching townships:", error);
+        }
+    };
+
     return (
         <View style={styles.container}>
-
-            {/* Chat start  */}
             <Text style={{ color: Colors.Swan, fontWeight: '600', fontSize: 18, marginBottom: 10 }}>Chats</Text>
             <ScrollView>
 
-                {/* Chat Crad start  */}
-                {/* for the global chat  */}
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start', gap: 7, marginBottom: 10 }}>
+                {/* Global Chat */}
+                <View style={styles.sectionHeader}>
                     <FontAwesome name="globe" size={15} color={Colors.primary} style={styles.notificationIcon} />
-                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Global Chat</Text>
+                    <Text style={styles.sectionText}>Global Chat</Text>
                 </View>
-                <ChartCard organizationName="Global" message='mesg from globe' type="global" profileImage={require('../../assets/images/profile.png')} />
+                <ChartCard organizationName="Global" message="Message from Global Chat" type="global" profileImage={require('../../assets/images/profile.png')} />
 
-                {/* for the team group chart  */}
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start', gap: 7, marginBottom: 10 }}>
+                {/* Dynamic Township Group Chats */}
+                <View style={styles.sectionHeader}>
                     <FontAwesome name="users" size={15} color={Colors.primary} style={styles.notificationIcon} />
-                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Group Chat</Text>
+                    <Text style={styles.sectionText}>Group Chat</Text>
                 </View>
-                <ChartCard organizationName="Group (Your Org Name)" message="mesg from group" teamNumber={10} type="group" profileImage={require('../../assets/images/profile.png')} />
+                {townshipChats && townshipChats.length > 0 ? (
+                    townshipChats.map((township, index) => (
+                        <GroupCard
+                            key={index}
+                            organizationName={`Group: ${township}`}
+                            message={`Message from ${township} group`}
+                            teamNumber={10} // Adjust this number as needed
+                            type="group"
+                            profileImage={require('../../assets/images/profile.png')}
+                        />
+                    ))
+                ) : (
+                    <Text style={styles.noTownshipText}>No township groups available</Text>
+                )}
 
-                {/* for the chat with other organzation  */}
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start', gap: 7, marginBottom: 10 }}>
+                {/* Individual Chats */}
+                <View style={styles.sectionHeader}>
                     <FontAwesome name="comments" size={15} color={Colors.primary} style={styles.notificationIcon} />
-                    <Text style={{ color: Colors.primary, fontWeight: '500', fontSize: 16, }}>Others</Text>
+                    <Text style={styles.sectionText}>Others</Text>
                 </View>
-                <ChartCard organizationName="Org 1" type="individual" profileImage={require('../../assets/images/profile.png')} message='hello org 1' />
-                <ChartCard organizationName="Org 2" type="individual" profileImage={require('../../assets/images/profile.png')} message='hello org 2' />
-                <ChartCard organizationName="Org 3" type="individual" profileImage={require('../../assets/images/profile.png')} message='hello org 3' />
+                <ChartCard organizationName="Org 1" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 1" />
+                <ChartCard organizationName="Org 2" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 2" />
+                <ChartCard organizationName="Org 3" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 3" />
 
             </ScrollView>
-            {/* Chart Card end  */}
-
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -48,4 +113,23 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
         paddingHorizontal: 20,
     },
-})
+    sectionHeader: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        gap: 7,
+        marginBottom: 10,
+    },
+    sectionText: {
+        color: Colors.primary,
+        fontWeight: '500',
+        fontSize: 16,
+    },
+    noTownshipText: {
+        color: Colors.Swan,
+        fontStyle: 'italic',
+        fontSize: 14,
+        marginBottom: 10,
+    },
+});

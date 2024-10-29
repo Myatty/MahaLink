@@ -33,7 +33,7 @@ const TabLayout = () => {
         tabBarInactiveTintColor: "#CDCDE0",
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: Colors.primary,
+          backgroundColor: Colors.primaryGreen,
           height: 84,
         },
       }}

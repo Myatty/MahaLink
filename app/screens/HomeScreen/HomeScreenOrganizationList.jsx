@@ -56,7 +56,7 @@ export default function HomeScreenOrganizationList() {
                     </TouchableOpacity> */}
                     <TouchableOpacity
                         style={{
-                            backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
+                            backgroundColor: Colors.Gray, padding: 10, borderRadius: 10,
                         }}
                         onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
                     >

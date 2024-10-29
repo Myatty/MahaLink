@@ -38,8 +38,8 @@ export default function HomeScreenHeader() {
 
     return (
         <View style={{ padding: 10 }}>
-            <View style={styles.container}>
-                <View style={styles.innerContainer}>
+            <View style={styles.container} className="bg-updatedBg ">
+                <View style={styles.innerContainer} >
                     <Image
                         source={require('../../../assets/images/profile.png')}
                         style={styles.image}
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: Colors.primary,
+        backgroundColor: Colors.primaryGreen,
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 20,

@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 
-export default function ChartCard({ organizationName, profileImage, teamNumber, type, message, user }) {
+export default function GroupCard({ townshipName, profileImage, teamNumber, type, message, user }) {
     const router = useRouter();
 
     // Function to truncate message if word count exceeds 10
@@ -23,8 +23,8 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
             <TouchableOpacity
                 style={styles.container}
                 onPress={() => router.push({
-                    pathname: '/screens/ChatScreen/ChattingScreen',
-                    params: { organizationName, type }
+                    pathname: '/screens/ChatScreen/GroupChatScreen',
+                    params: { townshipName, type }
                 })}
             >
                 {/* User profile and info */}
@@ -37,8 +37,8 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
                         />
                         <View style={styles.infoContainer}>
                             {/* Organization name */}
-                            <Text style={styles.organizationName}>
-                                {organizationName}
+                            <Text style={styles.townshipName}>
+                                {townshipName}
                             </Text>
 
                             {type === 'group' && (
@@ -53,7 +53,7 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
 
                             <View>
                                 <Text style={{ fontSize: 14, color: Colors.Swan, marginTop: 5 }}>
-                                    {type !== 'group' && organizationName + ': '} {truncateMessage(message)}
+                                    {type !== 'group' && townshipName + ': '} {truncateMessage(message)}
                                 </Text>
                             </View>
                         </View>
@@ -65,8 +65,8 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
                             padding: 10, borderRadius: 10,
                         }}
                         onPress={() => router.push({
-                            pathname: '/screens/ChatScreen/ChattingScreen',
-                            params: { organizationName, type }
+                            pathname: '/screens/ChatScreen/GroupChatScreen',
+                            params: { townshipName, type }
                         })}
                     >
                         <FontAwesome name="chevron-right" size={15} color={Colors.Swan} style={styles.notificationIcon} />
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    organizationName: {
-        color: Colors.primaryGreen,
+    townshipName: {
+        color: Colors.primary,
         fontSize: 15,
         fontWeight: 'bold',
     },

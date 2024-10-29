@@ -23,27 +23,27 @@ export default function HomeScreenOrganizationList() {
 
                         {/* Organization name  */}
                         <Text style={{
-                            color: Colors.primary, fontSize: 15,
+                            color: Colors.Swan, fontSize: 15,
                             fontWeight: '400', fontWeight: 'bold',
                             marginBottom: 8
                         }}>
                             Doh Eain <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} style={{ marginRight: 5 }} />
                         </Text>
 
-                        <View style={{
+                        {/* <View style={{
                             display: 'flex', flexDirection: 'row', alignItems: 'center',
                             justifyContent: 'start', gap: 5,
-                        }}>
-                            {/* team number  */}
-                            <View style={{
+                        }}> */}
+                        {/* team number  */}
+                        {/* <View style={{
                                 display: 'flex', flexDirection: 'row', alignItems: 'center',
                                 justifyContent: 'start', gap: 1, color: Colors.Gray, backgroundColor: Colors.Gray,
                                 padding: 3, width: 40, borderRadius: 10, paddingLeft: 8,
                             }}>
                                 <FontAwesome name="user-o" size={13} color={Colors.Swan} style={{ marginRight: 5 }} />
                                 <Text style={{ fontSize: 13, }}>5</Text>
-                            </View>
-                        </View>
+                            </View> */}
+                        {/* </View> */}
 
                     </View>
                 </View>
@@ -56,11 +56,11 @@ export default function HomeScreenOrganizationList() {
                     </TouchableOpacity> */}
                     <TouchableOpacity
                         style={{
-                            backgroundColor: Colors.Blue, padding: 10, borderRadius: 10,
+                            backgroundColor: Colors.Gray, padding: 10, borderRadius: 10,
                         }}
                         onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
                     >
-                        <FontAwesome name="eye" size={15} color={Colors.white} style={styles.notificationIcon} />
+                        <FontAwesome name="eye" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     </TouchableOpacity>
 
                 </View>

@@ -7,6 +7,9 @@ import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase ini
 import ChartCard from '../screens/ChatScreen/ChartCard';
 import GroupCard from '../screens/ChatScreen/GroupCard';
 
+import { auth, db } from '../../firebaseConfig'; 
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+
 export default function Chat() {
     const [userName, setUserName] = useState("");
     const [townshipChats, setTownshipChats] = useState([]);
@@ -82,7 +85,7 @@ export default function Chat() {
                     townshipChats.map((township, index) => (
                         <GroupCard
                             key={index}
-                            organizationName={`Group: ${township}`}
+                            townshipName={`${township}`}
                             message={`Message from ${township} group`}
                             teamNumber={10} // Adjust this number as needed
                             type="group"
@@ -92,7 +95,7 @@ export default function Chat() {
                 ) : (
                     <Text style={styles.noTownshipText}>No township groups available</Text>
                 )}
-
+                
                 {/* Individual Chats */}
                 <View style={styles.sectionHeader}>
                     <FontAwesome name="comments" size={15} color={Colors.Swan} style={styles.notificationIcon} />

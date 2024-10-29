@@ -14,7 +14,7 @@ import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
-import { onSnapshot, doc, getDoc } from "firebase/firestore";
+import { onSnapshot, doc, getDoc, getDocs } from "firebase/firestore";
 
 const Map = () => {
   const [location, setLocation] = useState(null);
@@ -73,22 +73,22 @@ const Map = () => {
     fetchUserData();
   }, []);
 
-  // fetch pinned markers to show globally( doesnt work )
-  useEffect(() => {
-    const fetchPins = async () => {
-      const db = getFirestore();
-      const markersCollection = collection(db, "Markers");
-      const querySnapshot = await getDocs(markersCollection);
-      const pins = querySnapshot.docs.map((doc) => ({
-        id: doc.userId,
-        ...doc.data(),
-      }));
-      setOldPinned(pins);
-      console.log("Old pinned data : ", id);
-    };
+  // // fetch pinned markers to show globally( doesnt work )
+  // useEffect(() => {
+  //   const fetchPins = async () => {
+  //     const db = getFirestore();
+  //     const markersCollection = collection(db, "Markers");
+  //     const querySnapshot = await getDocs(markersCollection);
+  //     const pins = querySnapshot.docs.map((doc) => ({
+  //       id: doc.userId,
+  //       ...doc.data(),
+  //     }));
+  //     setOldPinned(pins);
+  //     console.log("Old pinned data : ", id);
+  //   };
 
-    fetchPins();
-  }, []);
+  //   fetchPins();
+  // }, []);
 
   // Fetch all markers from Firestore and update state (this works i guess )
   useEffect(() => {

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     organizationName: {
-        color: Colors.primary,
+        color: Colors.primaryGreen,
         fontSize: 15,
         fontWeight: 'bold',
     },

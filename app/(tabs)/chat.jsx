@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../constants/Colors';
+import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase initialized and configured
 import ChartCard from '../screens/ChatScreen/ChartCard';
 import GroupCard from '../screens/ChatScreen/GroupCard';
-import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase initialized and configured
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 
 export default function Chat() {
     const [userName, setUserName] = useState("");
@@ -69,13 +69,13 @@ export default function Chat() {
 
                 {/* Global Chat */}
                 <View style={styles.sectionHeader}>
-                    <FontAwesome name="globe" size={15} color={Colors.primary} style={styles.notificationIcon} />
+                    <FontAwesome name="globe" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     <Text style={styles.sectionText}>Global Chat</Text>
                 </View>
                 <ChartCard organizationName="Global" message="Message from Global Chat" type="global" profileImage={require('../../assets/images/profile.png')} />
-git                 {/* Dynamic Township Group Chats */}
+                {/* Dynamic Township Group Chats */}
                 <View style={styles.sectionHeader}>
-                    <FontAwesome name="users" size={15} color={Colors.primary} style={styles.notificationIcon} />
+                    <FontAwesome name="users" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     <Text style={styles.sectionText}>Group Chat</Text>
                 </View>
                 {townshipChats && townshipChats.length > 0 ? (
@@ -95,7 +95,7 @@ git                 {/* Dynamic Township Group Chats */}
 
                 {/* Individual Chats */}
                 <View style={styles.sectionHeader}>
-                    <FontAwesome name="comments" size={15} color={Colors.primary} style={styles.notificationIcon} />
+                    <FontAwesome name="comments" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     <Text style={styles.sectionText}>Others</Text>
                 </View>
                 <ChartCard organizationName="Org 1" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 1" />
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     sectionText: {
-        color: Colors.primary,
+        color: Colors.Swan,
         fontWeight: '500',
         fontSize: 16,
     },

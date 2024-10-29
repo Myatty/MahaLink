@@ -23,7 +23,7 @@ export default function HomeScreenOrganizationList() {
 
                         {/* Organization name  */}
                         <Text style={{
-                            color: Colors.primary, fontSize: 15,
+                            color: Colors.Swan, fontSize: 15,
                             fontWeight: '400', fontWeight: 'bold',
                             marginBottom: 8
                         }}>
@@ -60,7 +60,7 @@ export default function HomeScreenOrganizationList() {
                         }}
                         onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
                     >
-                        <FontAwesome name="eye" size={15} color={Colors.white} style={styles.notificationIcon} />
+                        <FontAwesome name="eye" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     </TouchableOpacity>
 
                 </View>

@@ -7,9 +7,6 @@ import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase ini
 import ChartCard from '../screens/ChatScreen/ChartCard';
 import GroupCard from '../screens/ChatScreen/GroupCard';
 
-import { auth, db } from '../../firebaseConfig'; 
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-
 export default function Chat() {
     const [userName, setUserName] = useState("");
     const [townshipChats, setTownshipChats] = useState([]);

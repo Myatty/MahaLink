@@ -178,8 +178,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/One-Bit-Myanmar/mahar-link.git">
-  <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" alt="contrib.rocks image" />
+<a href="https://github.com/One-Bit-Myanmar/mahar-link/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

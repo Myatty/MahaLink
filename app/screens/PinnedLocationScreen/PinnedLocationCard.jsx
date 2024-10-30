@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
 import moment from 'moment';
-import { Colors } from '../../../constants/Colors'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../../../constants/Colors';
 
 export default function PinnedLocationCard({ state, city, org, date, supplies }) {
     return (
@@ -29,11 +29,6 @@ const styles = StyleSheet.create({
     stateContainer: {
         backgroundColor: '#fff',
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 2,
     },
     cityContainer: {
         padding: 15,
@@ -47,13 +42,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
-        color: '#555',
+        color: Colors.Swan,
     },
     orgName: {
         fontSize: 18,
-        fontStyle: 'italic',
+        // fontStyle: 'italic',
         marginBottom: 5,
-        color: Colors.primary,
+        color: Colors.primaryGreen,
     },
     timePinned: {
         fontSize: 14,

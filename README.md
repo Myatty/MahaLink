@@ -8,8 +8,6 @@
     <img src="mahar-link-logo.png" alt="Logo">
   </a>
 
-  <h3 align="center">Mahar Link</h3>
-
 <p align="center">
    A centralized platform for efficient flood relief coordination in Myanmar.
 </p>
@@ -183,6 +181,14 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 ### Top contributors:
+
+- [Hein Htet San](https://github.com/Hein-HtetSan)
+- [Myint Myat Pyae Sone](https://github.com/Myatty)
+- [Thin Han Soe](https://github.com/Yoinami)
+- [Phyo Zaw Linn](https://github.com/farout101)
+- [Lynn Myat Bhone](https://github.com/@Lynn-Myat-Bhone)
+
+<br>
 
 <p align="left">
 <!-- contributor  -->

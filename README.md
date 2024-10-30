@@ -1,29 +1,223 @@
-# Mahar Link
 
-## Project Introduction
-Mahar Link aims to enhance communication and coordination among organizations, volunteers, and non-profit entities involved in Myanmar flood relief efforts. Often, supplies are delivered multiple times to the same location while other areas remain underserved due to a lack of systematic communication. This platform provides a centralized solution to ensure efficient distribution of resources, enabling better support and contribution to affected areas.
+<a id="readme-top"></a>
 
-## Main Contributors
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-- Hein Htet San
-- Myint Myat Pyae Sone
-- Phyo Zaw Linn
-- Thihan Soe
-- Lynn Myat Bhone
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Mahar Link</h3>
+
+  <p align="center">
+    An awesome README template to jumpstart your projects!
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+Mahar Link improves communication and coordination among organizations, volunteers, and non-profits in Myanmar flood relief efforts. It prevents redundant supply deliveries to the same location and ensures underserved areas receive necessary resources, providing efficient and effective support.
+
+## Mission
+
+To enhance coordination among organizations, volunteers, and non-profits, preventing redundant supply deliveries and ensuring all affected areas receive the necessary support.
 
 ## Vision
 
 To create a centralized communication platform that ensures efficient and equitable distribution of resources during Myanmar flood relief efforts.
 
 
-## Mission
-
-To enhance coordination among organizations, volunteers, and non-profits, preventing redundant supply deliveries and ensuring all affected areas receive the necessary support.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## How to Contribute
 
-**go to the `develop` branch and read how**
+### Built With
+
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+
+* [![React Native][React.js]][https://reactnative.dev/]
+* [![Expo][ExpoJs]](https://expo.dev/)
+* [![Firebase][Firebase.js]](https://firebase.google.com/)
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+Ensure you have the following installed on your machine:
+
+- Node.js (v14 or later)
+- npm (v6 or later)
+- Expo CLI (for React Native projects)
+
+### Installation
+
+1. Clone the repository:
+
+    ```sh
+    git clone https://github.com/One-Bit-Myanmar/mahar-link.git
+    cd mahar-link
+    ```
+
+2. Install Dependencies
+
+    ```sh
+    npm install
+    ```
+
+3. Set up Firebase
+
+    - Create a Firebase project at `Firebase Console`
+    - Add a web app to your Firebase project.
+    - Copy the Firebase configuration and create a `firebaseConfig.js` file in the `src` directory;
+
+    ```javascript
+    // src/firebaseConfig.js
+    const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    };
+
+    export default firebaseConfig;
+    ```
+
+4. Start the development server
+
+    ```sh
+    npm start
+    # or
+    npm run android
+    # or
+    npm run ios
+    ```
+
+- Additional Configuration
+
+    - **Environment Variables**
+    Create a `.env` file in the root directory and add any necessary environment variables.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+**Access the app**
+
+ - Open the Expo Go app on your mobile device and scan the QR code displayed in the terminal.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Top contributors:
+
+<a href="https://github.com/One-Bit-Myanmar/mahar-link.git">
+  <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" alt="contrib.rocks image" />
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the Apache License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Your Name - [@onebitmyanmar](https://twitter.com/your_username) - onebitmyanmar@gmail.com
+
+Project Link: [https://github.com/One-Bit-Myanmar/mahar-link](https://github.com/One-Bit-Myanmar/mahar-link)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Firebase](https://firebase.google.com/)
+- [Best-ReadMe-Template](https://github.com/othneildrew/Best-README-Template)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 
 

@@ -93,7 +93,6 @@ export default function Chat() {
                 ) : (
                     <Text style={styles.noTownshipText}>No township groups available</Text>
                 )}
-
                 
             </ScrollView>
         </View>

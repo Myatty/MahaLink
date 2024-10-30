@@ -10,7 +10,13 @@
 
 <p align="center">
    A centralized platform for efficient flood relief coordination in Myanmar.
+
+<a href="https://github.com/One-Bit-Myanmar/mahar-link/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/One-Bit-Myanmar/mahar-link/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
 </p>
+
+
 </div>
 
 

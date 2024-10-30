@@ -37,7 +37,7 @@ export default function HomeScreenOrganizationList({ name, teamNumber }) { // Ac
                         style={styles.viewButton}
                         onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
                     >
-                        <FontAwesome name="eye" size={15} color={Colors.white} style={styles.notificationIcon} />
+                        <FontAwesome name="eye" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     </TouchableOpacity>
                 </View>
             </View>

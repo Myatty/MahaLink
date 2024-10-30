@@ -133,7 +133,7 @@ export default function ChattingScreen() {
         <Button
           title="Send"
           onPress={handleSend}
-          color={Colors.primary}
+          color={Colors.primaryGreen}
         />
       </View>
     </KeyboardAvoidingView>

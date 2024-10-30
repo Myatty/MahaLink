@@ -24,7 +24,17 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 
+  tailwind: {
+    primary: "#161622",
+    background: "#181716",
+    updatedBg: "#C1E2A4",
+    updatedGreen: "#347928",
+    textWhite: "#FBFDFA",
+    green: "#3BFB06",
+  },
   // custom colors
+  primaryYellow: "#FFA001",
+  primaryGreen: "#347928",
   primary: '#4A249D',
   strongGreen: '#347928',
   Green: '#86D293',

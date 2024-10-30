@@ -1,20 +1,20 @@
+import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import "react-native-reanimated";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
   Alert,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
+import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Dimensions } from "react-native";
-import { Link, useRouter } from "expo-router";
-import { auth } from "../../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { auth } from "../../firebaseConfig";
 
 SplashScreen.preventAutoHideAsync();
 const { height } = Dimensions.get("window");
@@ -58,6 +58,7 @@ const Login = () => {
           </Text>
         </View>
         <View style={styles.contentWrapper}>
+          {/* title  */}
           <Text
             className="text-3xl text-white font-bold text-center pb-4"
             style={{ color: "#347928" }}
@@ -98,11 +99,11 @@ const Login = () => {
           </TouchableOpacity>
           <View style={styles.bottomTextContainer}>
             <Text style={styles.bottomText}>
-              Don't have an account?,{" "}
-              <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
-                <Text style={styles.linkText}>Sign up here</Text>
-              </TouchableOpacity>
+              Don't have an account?{" "}
             </Text>
+            <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
+              <Text style={styles.linkText}>Sign up here</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -118,16 +119,18 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 2,
     paddingLeft: 20,
-    borderRadius: 20,
+    borderRadius: 10,
+    borderColor: "#347928",
   },
   passwordContainer: {
     height: 60,
     margin: 12,
     borderWidth: 2,
     paddingLeft: 20,
-    borderRadius: 20,
+    borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
+    borderColor: "#347928",
   },
   passwordInput: {
     flex: 1,
@@ -140,9 +143,10 @@ const styles = StyleSheet.create({
     width: "40%",
     alignSelf: "center",
     backgroundColor: "#347928",
-    borderRadius: 20,
+    borderRadius: 10,
     paddingVertical: 15,
     alignItems: "center",
+    marginTop: 20,
   },
   buttonText: {
     color: "#FEFEFE",
@@ -150,9 +154,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   bottomTextContainer: {
+    marginTop: 20,
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
   },
   bottomText: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     textAlign: "center",
     fontSize: 18,
     color: "black",

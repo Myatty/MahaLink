@@ -68,6 +68,11 @@ export default function ProfileScreen() {
                 </Text>
             </View>
 
+            <Text style={{
+                paddingHorizontal: 15, fontSize: 15, color: Colors.Red,
+                fontWeight: 'bold', marginTop: 20, marginBottom: 10,
+            }}>Danger Zone</Text>
+
             {/* just for further upgrade  */}
             <View style={{ padding: 12, }}>
                 {/* export contribution data button  */}
@@ -75,7 +80,7 @@ export default function ProfileScreen() {
                     <Text
                         style={styles.exportText}
                         onPress={() => { }}>
-                        Export Contribution Records
+                        <FontAwesome name="file" size={18} color={Colors.tailwind.primary} style={{ marginRight: 10 }} /> Export Contribution Records
                     </Text>
                 </View>
                 {/* delete account button  */}
@@ -83,7 +88,7 @@ export default function ProfileScreen() {
                     <Text
                         style={styles.deleteText}
                         onPress={() => { }}>
-                        Delete Account
+                        <FontAwesome name="ban" size={18} color={Colors.Red} style={{ marginRight: 10 }} /> Delete Account
                     </Text>
                 </View>
             </View>
@@ -98,7 +103,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'start',
         justifyContent: 'start',
-        padding: 8,
+        padding: 7,
+        marginTop: 20,
     },
     descriptionWrapper: {
         padding: 14,
@@ -155,25 +161,25 @@ const styles = StyleSheet.create({
     exportButton: {
         width: '100%',
         // backgroundColor: Colors.LightGreen,
-        borderColor: Colors.Green,
-        padding: 20,
+        // borderColor: Colors.tailwind.primary,
+        padding: 10,
         textAlign: 'center',
-        borderWidth: 2,
         borderRadius: 10,
         marginBottom: 10,
+        // backgroundColor: Colors.Gray,
     },
     exportText: {
-        color: Colors.Green,
+        color: Colors.tailwind.primary,
         fontSize: 16,
         fontWeight: 'bold',
     },
     deleteButton: {
         width: '100%',
-        borderColor: Colors.Red,
-        // backgroundColor: Colors.LightRed,
-        padding: 20,
+        // borderColor: Colors.Red,
+        // backgroundColor: Colors.Gray,
+        padding: 10,
         textAlign: 'center',
-        borderWidth: 2,
+        // borderWidth: 2,
         borderRadius: 10,
         marginBottom: 10,
     },

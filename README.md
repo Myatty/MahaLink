@@ -5,14 +5,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/One-Bit-Myanmar/mahar-link.git">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="mahar-link-logo.png" alt="Logo">
   </a>
 
   <h3 align="center">Mahar Link</h3>
 
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-  </p>
+<p align="center">
+   A centralized platform for efficient flood relief coordination in Myanmar.
+</p>
 </div>
 
 
@@ -186,8 +186,8 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="left">
 <!-- contributor  -->
-<a href="">
-    <img src="https://avatars.githubusercontent.com/u/99192842?s=64&v=4" style="border-radius: 50%;">
+<a href="https://github.com/One-Bit-Myanmar/mahar-link/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" />
 </a>
 
 </p>

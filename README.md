@@ -58,6 +58,10 @@ To enhance coordination among organizations, volunteers, and non-profits, preven
 
 To create a centralized communication platform that ensures efficient and equitable distribution of resources during Myanmar flood relief efforts.
 
+### Documentation
+
+For detailed documentation, please visit [Documentation](/doc/Maha-Link-Documentation.pdf).
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

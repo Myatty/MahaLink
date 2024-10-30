@@ -47,7 +47,7 @@ NotificationCard.propTypes = {
 const styles = StyleSheet.create({
   card: {
     padding: 10,
-    backgroundColor: Colors.LightGray,
+    backgroundColor: Colors.white,
     borderRadius: 5,
     margin: 5,
     position: 'relative',

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 
@@ -31,8 +31,8 @@ export default function HomeScreenRecord() {
                         <Text style={{ fontSize: 11, textTransform: 'capitalize', }}>total contributions</Text>
                     </View>
                 </View>
-                {/* Contribution Block  */}
-                <View style={styles.card}>
+                {/* Location pined Block  */}
+                <TouchableOpacity onPress={() => router.push('/screens/PinnedLocationScreen/PinnedLocationListScreen')} style={styles.card}>
                     <FontAwesome name="map-o" size={24} color={Colors.Swan} style={{ marginBottom: 14, }} />
                     <View style={{
                         display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5
@@ -43,9 +43,9 @@ export default function HomeScreenRecord() {
                         </Text>
                     </View>
                     <View>
-                        <Text style={{ fontSize: 11, textTransform: 'capitalize', }}>current pinned location</Text>
+                        <Text style={{ fontSize: 11, textTransform: 'capitalize', }}>pinned location lists</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
             {/* Record end  */}
 

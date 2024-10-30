@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'start',
         justifyContent: 'start',
-        padding: 8,
+        padding: 7,
+        marginTop: 20,
     },
     descriptionWrapper: {
         padding: 14,

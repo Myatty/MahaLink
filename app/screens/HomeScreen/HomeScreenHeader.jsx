@@ -38,7 +38,7 @@ export default function HomeScreenHeader() {
 
     return (
         <View style={{ padding: 10 }}>
-            <View style={styles.container} className="bg-updatedBg ">
+            <View style={styles.container} className="bg-updatedBg">
                 <View style={styles.innerContainer} >
                     <Image
                         source={require('../../../assets/images/profile.png')}

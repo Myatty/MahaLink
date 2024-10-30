@@ -10,24 +10,24 @@ export default function HomeScreenOrganizationList({ name, teamNumber }) { // Ac
     return (
         <View style={{ paddingHorizontal: 4, marginBottom: 10 }}>
             <View style={styles.container}>
-              
+
                 <View style={styles.innerContainer}>
                     <Image
                         source={require('../../../assets/images/profile.png')}
                         style={styles.image}
                     />
                     <View>
-                        
+
                         <Text style={styles.orgName}>
                             {name} <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} />
                         </Text>
-                        <View style={styles.teamContainer}>
+                        {/* <View style={styles.teamContainer}>
                             
                             <View style={styles.teamNumberContainer}>
                                 <FontAwesome name="user-o" size={13} color={Colors.Swan} style={{ marginRight: 5 }} />
                                 <Text style={{ fontSize: 13 }}>{16}</Text>
                             </View>
-                        </View>
+                        </View> */}
                     </View>
                 </View>
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         borderRadius: 99,
     },
     orgName: {
-        color: Colors.primary,
+        color: Colors.Swan,
         fontSize: 15,
         fontWeight: 'bold',
         marginBottom: 8,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
     },
     viewButton: {
-        backgroundColor: Colors.Blue,
+        backgroundColor: Colors.Gray,
         padding: 10,
         borderRadius: 10,
     },

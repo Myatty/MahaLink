@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
+import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../constants/Colors';
+import { db } from '../../firebaseConfig';
 import HomScreenHeader from '../screens/HomeScreen/HomeScreenHeader';
 import HomeScreenOrganizationList from '../screens/HomeScreen/HomeScreenOrganizationList';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
-import HomeScreenRecord from '../screens/HomeScreen/HomeScreenRecord'
+import HomeScreenRecord from '../screens/HomeScreen/HomeScreenRecord';
 export default function Home() {
     const router = useRouter();
     const [organizationNames, setOrganizationNames] = useState([]);
@@ -25,9 +25,12 @@ export default function Home() {
         fetchOrganizationNames();
     }, []);
 
+    // Limit the number of organizations to display to 3
+    const limitedOrganizations = organizationNames.slice(0, 3);
+
     return (
         <View style={styles.container}>
-            
+
             <HomScreenHeader />
 
             <ScrollView>
@@ -39,7 +42,7 @@ export default function Home() {
                 </View>
 
                 <View style={{ paddingHorizontal: 15 }}>
-                    {organizationNames.map((name, index) => (
+                    {limitedOrganizations.map((name, index) => (
                         <HomeScreenOrganizationList key={index} name={name} />
                     ))}
                 </View>

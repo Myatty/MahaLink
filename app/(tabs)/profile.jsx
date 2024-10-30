@@ -4,7 +4,7 @@ import ProfileScreen from '../screens/UserScreen/ProfileScreen'
 
 export default function profile() {
   return (
-    <View style={{ padding: 10, }}>
+    <View style={{ padding: 5, }}>
       <ProfileScreen />
     </View>
   )

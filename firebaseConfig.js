@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { initializeAuth, getReactNativePersistence } from "firebase/auth"; 
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // Import Firestore
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -11,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "maha-link.appspot.com",
   messagingSenderId: "652608183604",
   appId: "1:652608183604:web:9d6cd25b581ef6d8ced961",
-  measurementId: "G-B7NPKPMY7X" // You can remove this line as well if you don't need it
+  measurementId: "G-B7NPKPMY7X"
 };
 
 // Initialize Firebase
@@ -22,5 +23,8 @@ const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
 
-// Export only auth
-export { auth }; // No need to export analytics
+// Initialize Firestore
+const db = getFirestore(app);
+
+// Export auth and db
+export { auth, db };

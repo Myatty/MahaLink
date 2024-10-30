@@ -1,63 +1,127 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useLayoutEffect, useState } from 'react';
-import { Button, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Colors } from '../../../constants/Colors';
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import {
+  Button,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { Colors } from "../../../constants/Colors";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  serverTimestamp,
+  query,
+  orderBy,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { auth, db } from "../../../firebaseConfig";
 
-const initialMessages = [
-  { id: '1', text: 'Hello!', sender: 'user', time: '10:00 AM', profileImage: 'https://placehold.co/400', senderName: 'User' },
-  { id: '2', text: 'Hi there!', sender: 'other', time: '10:01 AM', profileImage: 'https://placehold.co/400', senderName: 'Other' },
-  // ... other messages
-];
-
-export default function ChattingScreen() {
+export default function GroupChatScreen() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { organizationName } = route.params;
+  const { townshipName } = route.params || {};
 
-  const [messages, setMessages] = useState(initialMessages);
-  const [inputText, setInputText] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [userName, setUserName] = useState("");
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: organizationName,
+      title: townshipName,
+      headerBackTitle: "Back",
     });
-  }, [navigation, organizationName]);
+  }, [navigation, townshipName]);
 
-  const handleSend = () => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "Users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setUserName(userSnap.data().name || "Loading");
+        }
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  // screen title
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: townshipName,
+      headerLeft: () => (
+        <Button title="Back" onPress={() => navigation.goBack()} />
+      ),
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    const messagesRef = collection(db, "townshipChats", townshipName, "Messages");
+    const q = query(messagesRef, orderBy("timestamp", "asc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setMessages(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })));
+    });
+
+    return () => unsubscribe();
+  }, [townshipName]);
+
+  const handleSend = async () => {
     if (inputText.trim()) {
-      const newMessage = {
-        id: (messages.length + 1).toString(),
+      const messagesRef = collection(db, "townshipChats", townshipName, "Messages");
+      await addDoc(messagesRef, {
         text: inputText,
-        sender: 'user',
-        time: new Date().toLocaleTimeString(),
-        profileImage: 'https://placehold.co/400',
-        senderName: organizationName,
-      };
-      setMessages([...messages, newMessage]);
-      setInputText('');
+        sender: auth.currentUser?.uid,
+        senderName: userName || "You",
+        timestamp: serverTimestamp(),
+        profileImage: "https://placehold.co/400",
+      });
+      setInputText("");
     }
   };
 
   const renderItem = ({ item }) => (
-    <View style={[styles.messageWrapper, item.sender === 'user' ? styles.userWrapper : styles.otherWrapper]}>
-      {item.sender === 'other' && (
-        <Image source={{ uri: item.profileImage }} style={styles.profileImage} />
+    <View
+      style={[
+        styles.messageWrapper,
+        item.sender === auth.currentUser?.uid ? styles.userWrapper : styles.otherWrapper,
+      ]}
+    >
+      {item.sender !== auth.currentUser?.uid && (
+        <Image source={{ uri: item.profileImage || "https://placehold.co/400" }} style={styles.profileImage} />
       )}
-      <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 200 }}>
-        <View style={[styles.messageContainer, item.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+      <View style={{
+        flexDirection: "column",
+        alignItems: item.sender === auth.currentUser?.uid ? "flex-end" : "flex-start",
+        width: "100%",
+      }}>
+        {item.sender !== auth.currentUser?.uid && (
+          <Text style={styles.senderName}>{item.senderName}</Text>
+        )}
+        <View
+          style={[
+            styles.messageContainer,
+            item.sender === auth.currentUser?.uid ? styles.userMessage : styles.otherMessage,
+          ]}
+        >
           <View style={styles.messageContent}>
             <Text style={styles.messageText}>{item.text}</Text>
-            <Text style={styles.messageTime}>{item.time}</Text>
+            <Text style={styles.messageTime}>{item.timestamp?.toDate().toLocaleTimeString() || ""}</Text>
           </View>
         </View>
-        {item.sender === 'other' && (
-          <View style={{
-            display: 'flex', justifyContent: 'start', alignItems: 'start',
-            flexDirection: 'column', width: '100%',
-          }}>
-            <Text style={styles.senderName}>{item.senderName}</Text>
-          </View>
-        )}
       </View>
     </View>
   );
@@ -65,13 +129,10 @@ export default function ChattingScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
-      <FlatList
-        data={messages}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+      <FlatList data={messages} renderItem={renderItem} keyExtractor={(item) => item.id} />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -79,11 +140,7 @@ export default function ChattingScreen() {
           onChangeText={setInputText}
           placeholder="Type a message"
         />
-        <Button
-          title="Send"
-          onPress={handleSend}
-          color={Colors.primary}
-        />
+        <Button title="Send" onPress={handleSend} color={Colors.primary} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -92,68 +149,72 @@ export default function ChattingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   messageWrapper: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
   },
   userWrapper: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   otherWrapper: {
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
   },
   messageContainer: {
-    maxWidth: '100%',
-    borderRadius: 10,
-    padding: 10,
+    maxWidth: "75%",
+    borderRadius: 15,
+    padding: 12,
   },
   userMessage: {
-    backgroundColor: '#DCF8C6',
-    alignSelf: 'flex-end',
+    backgroundColor: "#DCF8C6",
+    alignSelf: "flex-end",
   },
   otherMessage: {
-    backgroundColor: '#ECECEC',
-    alignSelf: 'flex-start',
+    backgroundColor: "#ECECEC",
+    alignSelf: "flex-start",
   },
   profileImage: {
     width: 40,
     height: 40,
-    borderRadius: 99,
+    borderRadius: 20,
     marginRight: 10,
     borderColor: Colors.primary,
-    borderWidth: 2,
+    borderWidth: 1.5,
   },
   senderName: {
-    fontSize: 14,
-    fontWeight: 'thin',
-    marginBottom: 5,
-    marginTop: 5,
+    fontSize: 12,
+    fontWeight: "600",
+    color: "gray",
+    marginBottom: 4,
+    alignSelf: "flex-start",
   },
   messageContent: {
-    maxWidth: '100%',
+    maxWidth: "100%",
   },
   messageText: {
     fontSize: 16,
+    color: "#333",
   },
   messageTime: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 10,
+    color: "gray",
     marginTop: 5,
   },
   inputContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
     borderTopWidth: 1,
-    borderColor: '#ECECEC',
+    borderColor: "#ECECEC",
+    paddingBottom: 20,
+    paddingHorizontal: 15,
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ECECEC',
+    borderColor: "#ECECEC",
     borderRadius: 20,
-    paddingHorizontal: 10,
-    marginRight: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
   },
 });

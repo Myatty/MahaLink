@@ -15,6 +15,7 @@ import { StatusBar } from "expo-status-bar";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
 import { onSnapshot, doc, getDoc, getDocs } from "firebase/firestore";
+import { Colors } from "../../constants/Colors";
 
 const Map = () => {
   const [location, setLocation] = useState(null);
@@ -502,10 +503,13 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   normalButton: {
-    bottom: 120,
+    bottom: 190,
   },
   donationButton: {
-    bottom: 80,
+    bottom: 140,
+    backgroundColor: Colors.tailwind.updatedBg,
+    borderColor: Colors.white,
+    borderWidth: 1,
   },
   buttonImage: {
     width: 25,

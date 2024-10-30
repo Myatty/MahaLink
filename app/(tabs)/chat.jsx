@@ -93,15 +93,6 @@ export default function Chat() {
                     <Text style={styles.noTownshipText}>No township groups available</Text>
                 )}
                 
-                {/* Individual Chats */}
-                <View style={styles.sectionHeader}>
-                    <FontAwesome name="comments" size={15} color={Colors.Swan} style={styles.notificationIcon} />
-                    <Text style={styles.sectionText}>Others</Text>
-                </View>
-                <ChartCard organizationName="Org 1" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 1" />
-                <ChartCard organizationName="Org 2" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 2" />
-                <ChartCard organizationName="Org 3" type="individual" profileImage={require('../../assets/images/profile.png')} message="Hello Org 3" />
-
             </ScrollView>
         </View>
     );

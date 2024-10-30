@@ -11,7 +11,7 @@ export default function ProfileScreen() {
             <HomeScreenHeader />
 
             {/* edit and loguot start  */}
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11, gap: 10 }}>
                 <View style={styles.button}>
                     <Text
                         style={styles.buttonText}
@@ -40,28 +40,28 @@ export default function ProfileScreen() {
                 {/* email  */}
                 <Text style={{ color: Colors.Swan, fontWeight: 'bold', fontSize: 18, marginBottom: 7, }}>Contact</Text>
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 10, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="envelope" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text>contact@organization.com</Text>
                     </View>
                 </Text>
                 {/* facebook  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="facebook" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 6.6, }}>https://www.facebook.com/org.com</Text>
                     </View>
                 </Text>
                 {/* linkedin  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="linkedin" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 4, }}>https://www.likedin.com/org.com</Text>
                     </View>
                 </Text>
                 {/* website  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="link" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 3, }}>https://www.org.com</Text>
                     </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         alignItems: 'start',
         justifyContent: 'start',
         padding: 7,
-        marginTop: 20,
+        marginTop: 40,
     },
     descriptionWrapper: {
         padding: 14,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.primary,
         fontWeight: 'bold',
-        marginVertical: 8,
+        marginVertical: 5,
         width: '100%',
     },
     button: {

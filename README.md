@@ -1,17 +1,10 @@
 
 <a id="readme-top"></a>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/One-Bit-Myanmar/mahar-link.git">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -31,6 +24,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#main-features">Main Features</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -42,7 +36,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -70,6 +63,21 @@ To create a centralized communication platform that ensures efficient and equita
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- FEATURES -->
+## Main Features
+
+- **Real-time Communication**: Enables real-time communication among organizations, volunteers, and non-profits.
+- **Centralized Database**: Maintains a centralized database of organizations, volunteers, and resources.
+- **Location-based Services**: Provides location-based services to identify underserved areas.
+- **User Authentication**: Secure user authentication and authorization.
+- **Push Notifications**: Sends push notifications for important updates and alerts.
+- **Mobile Accessibility**: Accessible via mobile devices for on-the-go coordination.
+- **Resource Tracking**: Tracks the distribution of resources to prevent redundant deliveries.
+- **Data Analytics**: Analyzes data to improve resource distribution efficiency.
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### Built With
@@ -176,9 +184,15 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/One-Bit-Myanmar/mahar-link/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" />
+<p align="left">
+    <a href="https://github.com/One-Bit-Myanmar/mahar-link"></a>
+        <img src="https://img.shields.io/github/contributors/One-Bit-Myanmar/mahar-link.svg?style=for-the-badge" alt="GitHub contributors">
+    </a>
+
+<a href="">
+    <img src="https://avatars.githubusercontent.com/u/99192842?s=64&v=4" >
 </a>
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

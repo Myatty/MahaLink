@@ -81,7 +81,7 @@ export default function PinnedLocationListScreen() {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        marginBottom: 100,
+        marginBottom: 40,
     },
     stateContainer: {
         marginBottom: 20,

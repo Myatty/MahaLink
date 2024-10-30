@@ -23,5 +23,7 @@ To enhance coordination among organizations, volunteers, and non-profits, preven
 
 ## How to Contribute
 
+**go to the `develop` branch and read how**
+
 
 

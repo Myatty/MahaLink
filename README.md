@@ -10,7 +10,13 @@
 
 <p align="center">
    A centralized platform for efficient flood relief coordination in Myanmar.
+
+<a href="https://github.com/One-Bit-Myanmar/mahar-link/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/One-Bit-Myanmar/mahar-link/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
 </p>
+
+
 </div>
 
 
@@ -38,6 +44,7 @@
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#iot-device-simulation">IoT Device Simulation</a></li>
   </ol>
 </details>
 
@@ -58,9 +65,13 @@ To enhance coordination among organizations, volunteers, and non-profits, preven
 
 To create a centralized communication platform that ensures efficient and equitable distribution of resources during Myanmar flood relief efforts.
 
-### Documentation
+## Detailed Documentation
 
 For detailed documentation, please visit [Documentation](/doc/Maha-Link-Documentation.pdf).
+
+## IoT Device Simulation
+
+We have also created an IoT device simulation with Arduino for this project. You can find the repository for the simulation [**here**](https://github.com/One-Bit-Myanmar/IOT-for-weather-mornitoring).
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -217,9 +228,14 @@ Distributed under the Apache License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@onebitmyanmar](https://twitter.com/your_username) - onebitmyanmar@gmail.com
+One Bit Myanmar - onebitmyanmar@gmail.com
 
-Project Link: [https://github.com/One-Bit-Myanmar/mahar-link](https://github.com/One-Bit-Myanmar/mahar-link)
+**Project Link**
+| Project Type       | Repository Link                                                                 |
+|--------------------|---------------------------------------------------------------------------------|
+| Mobile Application | [https://github.com/One-Bit-Myanmar/mahar-link](https://github.com/One-Bit-Myanmar/mahar-link) |
+| IOT Device         | [https://github.com/One-Bit-Myanmar/IOT-for-weather-mornitoring](https://github.com/One-Bit-Myanmar/IOT-for-weather-mornitoring) |
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

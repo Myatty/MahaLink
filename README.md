@@ -185,13 +185,11 @@ Don't forget to give the project a star! Thanks again!
 ### Top contributors:
 
 <p align="left">
-    <a href="https://github.com/One-Bit-Myanmar/mahar-link"></a>
-        <img src="https://img.shields.io/github/contributors/One-Bit-Myanmar/mahar-link.svg?style=for-the-badge" alt="GitHub contributors">
-    </a>
-
+<!-- contributor  -->
 <a href="">
-    <img src="https://avatars.githubusercontent.com/u/99192842?s=64&v=4" >
+    <img src="https://avatars.githubusercontent.com/u/99192842?s=64&v=4" style="border-radius: 50%;">
 </a>
+
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

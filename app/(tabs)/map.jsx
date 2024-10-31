@@ -234,9 +234,11 @@ const Map = () => {
   */
 
   // real life fetchWeatherData
+  // ab4509b256dba42f9323f8c3c4cf6763
+  // e456ab1fd4c45ae7493296c5b9cb96a6
   const fetchWeatherData = async (lat, lon, retries = 3) => {
     try {
-      const apiKey = "e456ab1fd4c45ae7493296c5b9cb96a6";
+      const apiKey = "ab4509b256dba42f9323f8c3c4cf6763";
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`,
         { timeout: 10000 }

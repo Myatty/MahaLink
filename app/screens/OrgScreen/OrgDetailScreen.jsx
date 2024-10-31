@@ -52,8 +52,7 @@ export default function OrgDetailScreen() {
                         color: Colors.Swan, fontWeight: '400', fontSize: 15,
                         marginTop: 8, lineHeight: 20
                     }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tenetur! Lorem ipsum dolor sit
-                        amet, consectetur adipisicing elit. Architecto, a!
+                        This is a brief description of the organization. It provides an overview of the mission, vision, and values.
                     </Text>
                 </View>
 
@@ -104,9 +103,6 @@ export default function OrgDetailScreen() {
                 </View>
 
                 <View style={{ paddingHorizontal: 10, marginBottom: 250, }}>
-                    <ContributionCard />
-                    <ContributionCard />
-                    <ContributionCard />
                     <ContributionCard />
                     <ContributionCard />
                 </View>

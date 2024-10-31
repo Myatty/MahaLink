@@ -53,10 +53,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<video width="400" controls>
-  <source src="./app-demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![App Demo](./app-interface.jpg)](./app-demo.mp4)
 
 Mahar Link improves communication and coordination among organizations, volunteers, and non-profits in Myanmar flood relief efforts. It prevents redundant supply deliveries to the same location and ensures underserved areas receive necessary resources, providing efficient and effective support.
 

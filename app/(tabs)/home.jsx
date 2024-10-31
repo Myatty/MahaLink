@@ -1,3 +1,4 @@
+
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -48,12 +49,14 @@ export default function Home() {
     fetchOrganizationNames();
   }, []);
 
+
   return (
     <View style={styles.container}>
       <HomScreenHeader />
 
       <ScrollView>
         <HomeScreenRecord />
+
 
         <View style={styles.sectionHeader}>
           <Text style={styles.headerText}>Connect with others</Text>

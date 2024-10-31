@@ -1,4 +1,6 @@
+
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
@@ -6,6 +8,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebaseConfig";
 
 export default function HomeScreenHeader() {
+
     const [organizationName, setOrganizationName] = useState('Organization Name');
     const [userName, setUserName] = useState('Loading');
 
@@ -36,6 +39,8 @@ export default function HomeScreenHeader() {
         fetchUserData();
     }, []);
 
+    const router = useRouter();
+
     return (
         <View style={{ padding: 10 }}>
             <View style={styles.container} className="bg-updatedBg">
@@ -49,7 +54,9 @@ export default function HomeScreenHeader() {
                         <Text style={{ color: Colors.primaryGreen, fontSize: 15, fontWeight: '400' }}>{organizationName}</Text>
                     </View>
                 </View>
-                <FontAwesome name="bell" size={24} color={Colors.white} style={styles.notificationIcon} />
+                {/* nofification icon  */}
+                <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.Swan} style={styles.notificationIcon} />
+
             </View>
         </View>
     );

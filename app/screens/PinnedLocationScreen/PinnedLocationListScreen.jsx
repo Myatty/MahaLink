@@ -1,6 +1,7 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import PinnedLocationCard from './PinnedLocationCard';
+import { useNavigation } from '@react-navigation/native';
 
 // temporary raw data
 const pinnedLocations = [
@@ -53,6 +54,19 @@ const pinnedLocations = [
 ];
 
 export default function PinnedLocationListScreen() {
+
+    const navigation = useNavigation();
+
+    // screen title
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Pinned Locations',
+            headerLeft: () => (
+                <Button title="Back" onPress={() => navigation.goBack()} />
+            ),
+        });
+    }, [navigation]);
+
     return (
         <ScrollView style={styles.container}>
             {/* rendering  */}

@@ -7,7 +7,7 @@ import { Colors } from '../../../constants/Colors';
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebaseConfig";
 
-export default function HomeScreenHeader({ name }) {
+export default function HomeScreenHeader({ name, notificationIcon }) {
 
     const router = useRouter();
 
@@ -25,8 +25,11 @@ export default function HomeScreenHeader({ name }) {
                     </View>
                 </View>
                 {/* nofification icon  */}
-                <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.Swan} style={styles.notificationIcon} />
-
+                {
+                    notificationIcon && (
+                        <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.Swan} style={styles.notificationIcon} />
+                    )
+                }
             </View>
         </View>
     );

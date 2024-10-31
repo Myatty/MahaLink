@@ -1,15 +1,17 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { collection, getDocs } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 import { db } from '../../../firebaseConfig';
 import HomeScreenOrganizationList from '../HomeScreen/HomeScreenOrganizationList';
+import { useNavigation } from '@react-navigation/native';
 
 export default function OrgListScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [organizationNames, setOrganizationNames] = useState([]);
     const [filteredOrganizations, setFilteredOrganizations] = useState([]);
+    const navigation = useNavigation();
 
     // Filter organizations based on search query
     useEffect(() => {
@@ -32,6 +34,16 @@ export default function OrgListScreen() {
         };
         fetchOrganizationNames();
     }, []);
+
+    // screen title
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Organizations',
+            headerLeft: () => (
+                <Button title="Back" onPress={() => navigation.goBack()} />
+            ),
+        });
+    }, [navigation]);
 
     return (
         <View style={styles.container}>

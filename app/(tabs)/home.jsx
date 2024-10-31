@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <HomScreenHeader name={userName} />
+      <HomScreenHeader name={userName} notificationIcon={true} />
 
       <ScrollView>
         <HomeScreenRecord />

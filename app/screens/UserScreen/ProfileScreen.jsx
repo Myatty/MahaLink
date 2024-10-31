@@ -32,7 +32,7 @@ export default function ProfileScreen() {
     return (
         <View style={styles.container}>
             {/* profile header  */}
-            <HomeScreenHeader name={userName} />
+            <HomeScreenHeader name={userName} notificationIcon={true} />
 
             {/* edit and loguot start  */}
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11, gap: 10 }}>

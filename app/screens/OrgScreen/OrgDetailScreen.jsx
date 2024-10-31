@@ -1,22 +1,35 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 import HomeScreenHeader from "../../screens/HomeScreen/HomeScreenHeader";
 import ContributionCard from './ContributionCard';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function OrgDetailScreen() {
 
     const route = useRoute();
-    const { orgName } = route.params;
+    const { orgName, notification_state } = route.params;
+    const navigation = useNavigation();
+
+    // screen title
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: orgName,
+            headerLeft: () => (
+                <Button title="Back" onPress={() => navigation.goBack()} />
+            ),
+        });
+    }, [navigation]);
 
     return (
         // outer container 
         <View style={{ padding: 10, }}>
 
             {/* Organization Header  */}
-            <HomeScreenHeader name={orgName} />
+            <HomeScreenHeader name={orgName} notificationIcon={notification_state} />
 
             {/* button start  */}
             <View style={{

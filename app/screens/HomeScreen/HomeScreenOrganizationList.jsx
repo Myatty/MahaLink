@@ -13,6 +13,7 @@ export default function HomeScreenOrganizationList({ name, teamNumber }) { // Ac
     const handlePress = (org_name) => {
         navigation.navigate('screens/OrgScreen/OrgDetailScreen', {
             orgName: org_name,
+            notification_state: false,
         });
     };
 

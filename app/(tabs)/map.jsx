@@ -168,8 +168,8 @@ const Map = () => {
       latitude: newPinLocation.latitude,
       longitude: newPinLocation.longitude,
       type,
-      township: township || "Unknown Township",
-      pinnedBy: userName || "Anonymous User", // Use userName when saving the pin
+      township: township || "Yangon",
+      pinnedBy: userName || "Anonymous User", 
       createdAt: new Date().toISOString(),
     };
 

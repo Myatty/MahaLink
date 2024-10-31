@@ -3,9 +3,18 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreenOrganizationList({ name, teamNumber }) { // Accept props for name and teamNumber
     const router = useRouter();
+
+    const navigation = useNavigation();
+
+    const handlePress = (org_name) => {
+        navigation.navigate('screens/OrgScreen/OrgDetailScreen', {
+            orgName: org_name,
+        });
+    };
 
     return (
         <View style={{ paddingHorizontal: 4, marginBottom: 10 }}>
@@ -35,7 +44,7 @@ export default function HomeScreenOrganizationList({ name, teamNumber }) { // Ac
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     <TouchableOpacity
                         style={styles.viewButton}
-                        onPress={() => router.push('/screens/OrgScreen/OrgDetailScreen')}
+                        onPress={() => handlePress(name)}
                     >
                         <FontAwesome name="eye" size={15} color={Colors.Swan} style={styles.notificationIcon} />
                     </TouchableOpacity>

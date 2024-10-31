@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <HomScreenHeader />
+      <HomScreenHeader name={userName} />
 
       <ScrollView>
         <HomeScreenRecord />

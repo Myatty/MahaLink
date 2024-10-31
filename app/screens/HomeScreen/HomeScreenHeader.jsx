@@ -7,37 +7,7 @@ import { Colors } from '../../../constants/Colors';
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebaseConfig";
 
-export default function HomeScreenHeader() {
-
-    const [organizationName, setOrganizationName] = useState('Organization Name');
-    const [userName, setUserName] = useState('Loading');
-
-    // Fetch user data from Firestore
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const user = auth.currentUser;
-                if (user) {
-                    console.log("User is signed in:", user.uid);
-                    const userRef = doc(db, "Users", user.uid); // Reference to the user's document
-                    const userSnap = await getDoc(userRef);
-                    if (userSnap.exists()) {
-                        const userData = userSnap.data();
-                        console.log("Fetched user data:", userData);
-                        setUserName(userData.name || 'Loading'); // Use userData.name
-                        setOrganizationName(userData.organization || 'Organization Name'); // Ensure organizationName is set
-                    } else {
-                        console.log("No such document!");
-                    }
-                } else {
-                    console.log("No user is currently signed in.");
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-        fetchUserData();
-    }, []);
+export default function HomeScreenHeader({ name }) {
 
     const router = useRouter();
 
@@ -50,8 +20,8 @@ export default function HomeScreenHeader() {
                         style={styles.image}
                     />
                     <View>
-                        <Text style={{ color: Colors.primaryGreen, fontSize: 20, fontWeight: 'bold' }}>{userName}</Text>
-                        <Text style={{ color: Colors.primaryGreen, fontSize: 15, fontWeight: '400' }}>{organizationName}</Text>
+                        <Text style={{ color: Colors.primaryGreen, fontSize: 20, fontWeight: 'bold' }}>{name}</Text>
+                        <Text style={{ color: Colors.primaryGreen, fontSize: 15, fontWeight: '400' }}>Organization Type</Text>
                     </View>
                 </View>
                 {/* nofification icon  */}

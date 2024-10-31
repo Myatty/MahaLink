@@ -1,33 +1,22 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../../constants/Colors';
+import HomeScreenHeader from "../../screens/HomeScreen/HomeScreenHeader";
 import ContributionCard from './ContributionCard';
 
 export default function OrgDetailScreen() {
+
+    const route = useRoute();
+    const { orgName } = route.params;
+
     return (
         // outer container 
         <View style={{ padding: 10, }}>
 
             {/* Organization Header  */}
-            <View style={styles.container}>
-                {/* User profile and info  */}
-                <View style={styles.innerContainer}>
-                    <Image
-                        source={require('../../../assets/images/profile.png')}
-                        style={styles.image}
-                    />
-                    {/* user information  */}
-                    <View>
-                        <Text style={{ color: Colors.white, fontSize: 20, fontWeight: 'bold', }}>
-                            Org Name <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} style={{ marginRight: 5 }} />
-                        </Text>
-                        <Text style={{ color: Colors.white, fontSize: 15, fontWeight: '400' }}>
-                            Non-profit Organization
-                        </Text>
-                    </View>
-                </View>
-            </View>
+            <HomeScreenHeader name={orgName} />
 
             {/* button start  */}
             <View style={{

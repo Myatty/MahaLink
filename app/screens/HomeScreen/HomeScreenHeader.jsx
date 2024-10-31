@@ -55,7 +55,7 @@ export default function HomeScreenHeader() {
                     </View>
                 </View>
                 {/* nofification icon  */}
-                <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.white} style={styles.notificationIcon} />
+                <FontAwesome onPress={() => router.push('/screens/NotificationScreen/NotificationCenterScreen')} name="bell" size={24} color={Colors.Swan} style={styles.notificationIcon} />
 
             </View>
         </View>

@@ -68,10 +68,7 @@ export default function ProfileScreen() {
                 </Text>
             </View>
 
-            <Text style={{
-                paddingHorizontal: 15, fontSize: 15, color: Colors.Red,
-                fontWeight: 'bold', marginTop: 20, marginBottom: 10,
-            }}>Danger Zone</Text>
+
 
             {/* just for further upgrade  */}
             <View style={{ padding: 12, }}>
@@ -83,6 +80,12 @@ export default function ProfileScreen() {
                         <FontAwesome name="file" size={18} color={Colors.tailwind.primary} style={{ marginRight: 10 }} /> Export Contribution Records
                     </Text>
                 </View>
+
+                <Text style={{
+                    paddingHorizontal: 5, fontSize: 15, color: Colors.Red,
+                    fontWeight: 'bold', marginTop: 20, marginBottom: 10,
+                }}>Danger Zone</Text>
+
                 {/* delete account button  */}
                 <View style={styles.deleteButton}>
                     <Text

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../../constants/Colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 function NotificationCard({ type, content, timestamp, sender, onDelete }) {
   return (
@@ -30,7 +31,9 @@ function NotificationCard({ type, content, timestamp, sender, onDelete }) {
 
       {/* delete msg button  */}
       <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
-        <Text style={{ color: Colors.Red, textTransform: 'uppercase', fontWeight: 'bold' }}>x</Text>
+        <Text style={{ color: Colors.LightRed, fontWeight: 'bold' }}>
+          <FontAwesome name="trash" size={18} style={{ marginRight: 15 }} />  Remove
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     right: 10,
     paddingVertical: 4,
     paddingHorizontal: 10,
-    backgroundColor: Colors.LightRed,
+    // backgroundColor: Colors.LightRed,
     borderRadius: 5,
   },
   deleteButtonText: {

@@ -1,5 +1,6 @@
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useLayoutEffect } from 'react';
+import { ScrollView, StyleSheet, Button } from 'react-native';
 import NotificationCard from './NotificationCard';
 
 const notifications = [
@@ -9,6 +10,18 @@ const notifications = [
 ];
 
 export default function NotificationCenterScreen() {
+    const navigation = useNavigation();
+
+    // screen title
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Notification Center',
+            headerLeft: () => (
+                <Button title="Back" onPress={() => navigation.goBack()} />
+            ),
+        });
+    }, [navigation]);
+
     return (
         <ScrollView style={styles.container}>
             {/* rendering notification  */}

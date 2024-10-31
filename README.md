@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/One-Bit-Myanmar/mahar-link.git">
-    <img src="mahar-link-logo.png" alt="Logo">
+    <img src="maha-link-logo.png" alt="Logo">
   </a>
 
 <p align="center">

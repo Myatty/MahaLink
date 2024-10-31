@@ -30,7 +30,7 @@ export default function App() {
               className="text-3xl font-bold text-left"
               style={{ fontWeight: "900" }}
             >
-              <Text className="text-[#FEFEFE]">Mahar</Text>
+              <Text className="text-[#FEFEFE]">Maha</Text>
               <Text className="text-[#347928]"> Link</Text>
             </Text>
           </View>

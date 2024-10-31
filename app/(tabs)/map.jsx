@@ -204,6 +204,36 @@ const Map = () => {
     return highRainfallCount >= 3;
   };
 
+  /* 
+  Mock test of fetchWeatherData
+
+  const fetchWeatherData = async (lat, lon) => {
+  // Mock data directly for testing purposes
+  const mockData = {
+    list: [
+      { pop: 0.7, main: { humidity: 85, temp: 30 }, weather: [{ description: "Clear sky" }] },
+      { pop: 0.8, main: { humidity: 88, temp: 29 }, weather: [{ description: "Partly cloudy" }] },
+      { pop: 0.9, main: { humidity: 90, temp: 28 }, weather: [{ description: "Rain" }] },
+      { pop: 0.7, main: { humidity: 84, temp: 27 }, weather: [{ description: "Light rain" }] },
+      { pop: 0.75, main: { humidity: 86, temp: 26 }, weather: [{ description: "Overcast clouds" }] },
+    ],
+    city: { name: "Test City" },
+  };
+
+  setWeatherData(mockData);  // Update state with mock data
+
+  // Determine flood risk based on mock data
+  const floodRiskDetected = analyzeFloodRisk(mockData);
+  setFloodRisk(floodRiskDetected);
+
+  if (floodRiskDetected) {
+    alert("Flood risk detected! Please stay alert.");
+  }
+};
+
+  */
+
+  // real life fetchWeatherData
   const fetchWeatherData = async (lat, lon, retries = 3) => {
     try {
       const apiKey = "e456ab1fd4c45ae7493296c5b9cb96a6";
@@ -225,11 +255,10 @@ const Map = () => {
       }
     } catch (error) {
       if (retries > 0) {
-        console.warn(`Retrying... (${3 - retries} retries left)`);
         await fetchWeatherData(lat, lon, retries - 1);
       } else {
-        console.error("Error fetching weather data:", error);
       }
+      
     }
   };
 

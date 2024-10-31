@@ -1,16 +1,37 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import HomeScreenOrganizationList from '../HomeScreen/HomeScreenOrganizationList';
 import { FontAwesome } from '@expo/vector-icons';
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../../constants/Colors';
+import { db } from '../../../firebaseConfig';
+import HomeScreenOrganizationList from '../HomeScreen/HomeScreenOrganizationList';
 
 export default function OrgListScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [organizationNames, setOrganizationNames] = useState([]);
+    const [filteredOrganizations, setFilteredOrganizations] = useState([]);
 
-    const handleSearch = () => {
-        // Implement search functionality here
-        console.log('Searching for:', searchQuery);
-    };
+    // Filter organizations based on search query
+    useEffect(() => {
+        const filtered = organizationNames.filter((name) =>
+            name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredOrganizations(filtered);
+    }, [searchQuery, organizationNames]);
+
+    // fetch all usernames in firestore
+    useEffect(() => {
+        const fetchOrganizationNames = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "Users"));
+                const names = querySnapshot.docs.map(doc => doc.data().name || "Unknown");
+                setOrganizationNames(names);
+            } catch (error) {
+                console.error("Error fetching organization names:", error);
+            }
+        };
+        fetchOrganizationNames();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -21,17 +42,19 @@ export default function OrgListScreen() {
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />
-                <TouchableOpacity style={styles.button} onPress={handleSearch}>
-                    <FontAwesome name="search" size={20} color="white" />
+                <TouchableOpacity onPress={() => console.log('Searching for:', searchQuery)} style={styles.searchBtn}>
+                    <FontAwesome name="search" size={20} color={Colors.primaryGreen} />
                 </TouchableOpacity>
             </View>
-            <ScrollView>
-                <HomeScreenOrganizationList />
-                <HomeScreenOrganizationList />
-                <HomeScreenOrganizationList />
-                <HomeScreenOrganizationList />
-                {/* Add more organization lists as needed */}
-            </ScrollView>
+            <FlatList
+                data={filteredOrganizations}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <View style={styles.itemContainer}>
+                        <HomeScreenOrganizationList name={item} />
+                    </View>
+                )}
+            />
         </View>
     )
 }
@@ -39,33 +62,31 @@ export default function OrgListScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
-        padding: 15,
-    },
-    searchInput: {
-        flex: 1,
-        height: 50,
-        borderColor: Colors.Gray,
-        borderWidth: 1,
-        marginRight: 10,
         padding: 10,
-        paddingHorizontal: 20,
-        borderRadius: 10,
+        backgroundColor: Colors.white,
     },
-    searchContainer: {  
+    searchContainer: {
+        display: 'flex',
+        gap: 10,
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
-        paddingHorizontal: 6,
+        paddingHorizontal: 10,
     },
-    button: {
-        backgroundColor: Colors.primary,
+    searchInput: {
+        flex: 1,
+        height: 40,
+        borderColor:  Colors.primaryGreen,
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+    },  
+    itemText: {
+        fontSize: 16,
+    },
+    searchBtn: {
         padding: 10,
-        height: 50,
-        borderRadius: 10,
-        width: '15%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+        backgroundColor: Colors.tailwind.updatedBg,
+        borderRadius: 5,
+    }
 });

@@ -11,7 +11,7 @@ export default function ProfileScreen() {
             <HomeScreenHeader />
 
             {/* edit and loguot start  */}
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11, gap: 10 }}>
                 <View style={styles.button}>
                     <Text
                         style={styles.buttonText}
@@ -40,33 +40,38 @@ export default function ProfileScreen() {
                 {/* email  */}
                 <Text style={{ color: Colors.Swan, fontWeight: 'bold', fontSize: 18, marginBottom: 7, }}>Contact</Text>
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 10, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="envelope" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text>contact@organization.com</Text>
                     </View>
                 </Text>
                 {/* facebook  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="facebook" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 6.6, }}>https://www.facebook.com/org.com</Text>
                     </View>
                 </Text>
                 {/* linkedin  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="linkedin" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 4, }}>https://www.likedin.com/org.com</Text>
                     </View>
                 </Text>
                 {/* website  */}
                 <Text style={styles.contact}>
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '100%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                         <FontAwesome name="link" size={18} color={Colors.primary} style={{ marginRight: 20 }} />
                         <Text style={{ marginLeft: 3, }}>https://www.org.com</Text>
                     </View>
                 </Text>
             </View>
+
+            <Text style={{
+                paddingHorizontal: 15, fontSize: 15, color: Colors.Red,
+                fontWeight: 'bold', marginTop: 20, marginBottom: 10,
+            }}>Danger Zone</Text>
 
             {/* just for further upgrade  */}
             <View style={{ padding: 12, }}>
@@ -75,7 +80,7 @@ export default function ProfileScreen() {
                     <Text
                         style={styles.exportText}
                         onPress={() => { }}>
-                        Export Contribution Records
+                        <FontAwesome name="file" size={18} color={Colors.tailwind.primary} style={{ marginRight: 10 }} /> Export Contribution Records
                     </Text>
                 </View>
                 {/* delete account button  */}
@@ -83,7 +88,7 @@ export default function ProfileScreen() {
                     <Text
                         style={styles.deleteText}
                         onPress={() => { }}>
-                        Delete Account
+                        <FontAwesome name="ban" size={18} color={Colors.Red} style={{ marginRight: 10 }} /> Delete Account
                     </Text>
                 </View>
             </View>
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
         alignItems: 'start',
         justifyContent: 'start',
         padding: 7,
-        marginTop: 20,
+        marginTop: 40,
     },
     descriptionWrapper: {
         padding: 14,
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.primary,
         fontWeight: 'bold',
-        marginVertical: 8,
+        marginVertical: 5,
         width: '100%',
     },
     button: {
@@ -156,25 +161,25 @@ const styles = StyleSheet.create({
     exportButton: {
         width: '100%',
         // backgroundColor: Colors.LightGreen,
-        borderColor: Colors.Green,
-        padding: 20,
+        // borderColor: Colors.tailwind.primary,
+        padding: 10,
         textAlign: 'center',
-        borderWidth: 2,
         borderRadius: 10,
         marginBottom: 10,
+        // backgroundColor: Colors.Gray,
     },
     exportText: {
-        color: Colors.Green,
+        color: Colors.tailwind.primary,
         fontSize: 16,
         fontWeight: 'bold',
     },
     deleteButton: {
         width: '100%',
-        borderColor: Colors.Red,
-        // backgroundColor: Colors.LightRed,
-        padding: 20,
+        // borderColor: Colors.Red,
+        // backgroundColor: Colors.Gray,
+        padding: 10,
         textAlign: 'center',
-        borderWidth: 2,
+        // borderWidth: 2,
         borderRadius: 10,
         marginBottom: 10,
     },

@@ -1,14 +1,38 @@
-import React from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
+import { auth, db } from "../../../firebaseConfig";
 import HomeScreenHeader from '../HomeScreen/HomeScreenHeader';
 
 export default function ProfileScreen() {
+    const [userName, setUserName] = useState("Loading");
+
+    // Fetch user data from Firestore
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const userRef = doc(db, "Users", user.uid);
+                    const userSnap = await getDoc(userRef);
+                    if (userSnap.exists()) {
+                        const userData = userSnap.data();
+                        setUserName(userData.name || "Loading");
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+        fetchUserData();
+    }, []);
+
     return (
         <View style={styles.container}>
             {/* profile header  */}
-            <HomeScreenHeader />
+            <HomeScreenHeader name={userName} notificationIcon={true} />
 
             {/* edit and loguot start  */}
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, paddingHorizontal: 11, gap: 10 }}>

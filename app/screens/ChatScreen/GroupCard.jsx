@@ -41,15 +41,15 @@ export default function GroupCard({ townshipName, profileImage, teamNumber, type
                                 {townshipName}
                             </Text>
 
-                            {type === 'group' && (
-                                <View style={styles.teamBadgeContainer}>
+                            {/* {type === 'group' && ( */}
+                                {/* <View style={styles.teamBadgeContainer}> */}
                                     {/* Team member badge */}
-                                    <View style={styles.teamNumberContainer}>
+                                    {/* <View style={styles.teamNumberContainer}>
                                         <FontAwesome name="user-o" size={13} color={Colors.Swan} style={{ marginRight: 5 }} />
                                         <Text style={{ fontSize: 13 }}>{teamNumber}</Text>
-                                    </View>
-                                </View>
-                            )}
+                                    </View> */}
+                                {/* </View> */}
+                            {/* )} */}
 
                             <View>
                                 <Text style={{ fontSize: 14, color: Colors.Swan, marginTop: 5 }}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     townshipName: {
-        color: Colors.primary,
+        color: Colors.primaryGreen,
         fontSize: 15,
         fontWeight: 'bold',
     },

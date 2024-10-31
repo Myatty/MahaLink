@@ -1,33 +1,35 @@
 import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import React, { useLayoutEffect } from 'react';
+import { ScrollView, StyleSheet, Text, View, Button } from 'react-native';
 import { Colors } from '../../../constants/Colors';
+import HomeScreenHeader from "../../screens/HomeScreen/HomeScreenHeader";
 import ContributionCard from './ContributionCard';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function OrgDetailScreen() {
+
+    const route = useRoute();
+    const { orgName, notification_state } = route.params;
+    const navigation = useNavigation();
+
+    // screen title
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: orgName,
+            headerLeft: () => (
+                <Button title="Back" onPress={() => navigation.goBack()} />
+            ),
+        });
+    }, [navigation]);
+
     return (
         // outer container 
         <View style={{ padding: 10, }}>
 
             {/* Organization Header  */}
-            <View style={styles.container}>
-                {/* User profile and info  */}
-                <View style={styles.innerContainer}>
-                    <Image
-                        source={require('../../../assets/images/profile.png')}
-                        style={styles.image}
-                    />
-                    {/* user information  */}
-                    <View>
-                        <Text style={{ color: Colors.white, fontSize: 20, fontWeight: 'bold', }}>
-                            Org Name <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} style={{ marginRight: 5 }} />
-                        </Text>
-                        <Text style={{ color: Colors.white, fontSize: 15, fontWeight: '400' }}>
-                            Non-profit Organization
-                        </Text>
-                    </View>
-                </View>
-            </View>
+            <HomeScreenHeader name={orgName} notificationIcon={notification_state} />
 
             {/* button start  */}
             <View style={{
@@ -63,8 +65,7 @@ export default function OrgDetailScreen() {
                         color: Colors.Swan, fontWeight: '400', fontSize: 15,
                         marginTop: 8, lineHeight: 20
                     }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tenetur! Lorem ipsum dolor sit
-                        amet, consectetur adipisicing elit. Architecto, a!
+                        This is a brief description of the organization. It provides an overview of the mission, vision, and values.
                     </Text>
                 </View>
 
@@ -115,9 +116,6 @@ export default function OrgDetailScreen() {
                 </View>
 
                 <View style={{ paddingHorizontal: 10, marginBottom: 250, }}>
-                    <ContributionCard />
-                    <ContributionCard />
-                    <ContributionCard />
                     <ContributionCard />
                     <ContributionCard />
                 </View>

@@ -33,7 +33,7 @@ const Map = () => {
   const [township, setTownship] = useState("");
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("...");
-  const [oldPinned, setOldPinned] = useState(null);
+  const [oldPinned, setOldPinned] = useState([]);
   const [pin, setPin] = useState(null);
 
   useEffect(() => {

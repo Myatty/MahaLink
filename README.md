@@ -201,17 +201,18 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-- [Myint Myat Pyae Sone](https://github.com/Myatty)
 - [Hein Htet San](https://github.com/Hein-HtetSan)
+- [Myint Myat Pyae Sone](https://github.com/Myatty)
+- [Lynn Myat Bhone](https://github.com/@Lynn-Myat-Bhone)
 - [Thin Han Soe](https://github.com/Yoinami)
 - [Phyo Zaw Linn](https://github.com/farout101)
-- [Lynn Myat Bhone](https://github.com/@Lynn-Myat-Bhone)
+
 
 <br>
 
 <p align="left">
 <!-- contributor  -->
-<a href="https://github.com/One-Bit-Myanmar/mahar-link/graphs/contributors">
+<a href="https://github.com/Myatty/MahaLink/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=One-Bit-Myanmar/mahar-link" />
 </a>
 

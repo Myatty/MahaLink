@@ -126,7 +126,7 @@ Ensure you have the following installed on your machine:
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/One-Bit-Myanmar/mahar-link.git
+    git clone https://github.com/Myatty/MahaLink.git
     cd mahar-link
     ```
 
@@ -201,8 +201,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-- [Hein Htet San](https://github.com/Hein-HtetSan)
 - [Myint Myat Pyae Sone](https://github.com/Myatty)
+- [Hein Htet San](https://github.com/Hein-HtetSan)
 - [Thin Han Soe](https://github.com/Yoinami)
 - [Phyo Zaw Linn](https://github.com/farout101)
 - [Lynn Myat Bhone](https://github.com/@Lynn-Myat-Bhone)

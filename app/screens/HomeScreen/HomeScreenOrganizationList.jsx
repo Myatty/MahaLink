@@ -5,43 +5,34 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
-export default function HomeScreenOrganizationList({ name, teamNumber }) { // Accept props for name and teamNumber
+
+export default function HomeScreenOrganizationList({ name }) {
     const router = useRouter();
 
-    const navigation = useNavigation();
-
     const handlePress = (org_name) => {
-        navigation.navigate('screens/OrgScreen/OrgDetailScreen', {
-            orgName: org_name,
-            notification_state: false,
+        router.push({
+            pathname: '/screens/OrgScreen/OrgDetailScreen',
+            params: {
+                orgName: org_name,
+                notification_state: false,
+            },
         });
     };
 
     return (
         <View style={{ paddingHorizontal: 4, marginBottom: 10 }}>
             <View style={styles.container}>
-
                 <View style={styles.innerContainer}>
                     <Image
                         source={require('../../../assets/images/profile.png')}
                         style={styles.image}
                     />
                     <View>
-
                         <Text style={styles.orgName}>
                             {name} <FontAwesome name="check-circle" size={15} color={Colors.strongGreen} />
                         </Text>
-                        {/* <View style={styles.teamContainer}>
-                            
-                            <View style={styles.teamNumberContainer}>
-                                <FontAwesome name="user-o" size={13} color={Colors.Swan} style={{ marginRight: 5 }} />
-                                <Text style={{ fontSize: 13 }}>{16}</Text>
-                            </View>
-                        </View> */}
                     </View>
                 </View>
-
-                {/* View button */}
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     <TouchableOpacity
                         style={styles.viewButton}

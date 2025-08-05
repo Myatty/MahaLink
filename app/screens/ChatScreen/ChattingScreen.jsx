@@ -1,22 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { Button, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View, ActivityIndicator } from 'react-native';
 import { Colors } from '../../../constants/Colors';
-import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy, doc, getDoc, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy, doc, getDoc } from 'firebase/firestore';
 import { auth } from '../../../firebaseConfig';
 
 const db = getFirestore();
 const messagesRef = collection(db, 'globalChats');
 
 export default function ChattingScreen() {
-  const navigation = useNavigation();
+  const router = useRouter();
   const [userName, setUserName] = useState('Loading');
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false); 
 
-  // Fetch user data from Firestore
+  // fetch data from firestore
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -36,17 +36,7 @@ export default function ChattingScreen() {
     fetchUserData();
   }, []);
 
-  // screen title
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: 'Global Chats',
-      headerLeft: () => (
-        <Button title="Back" onPress={() => navigation.goBack()} />
-      ),
-    });
-  }, [navigation]);
-
-  // Fetch and listen to messages in real-time from Firestore
+  // real-time message fetching
   useEffect(() => {
     const messagesQuery = query(messagesRef, orderBy('timestamp', 'asc'));
 
@@ -109,7 +99,11 @@ export default function ChattingScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={80}
     >
-      
+      {/* Custom header with back button */}
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: 'white', borderBottomWidth: 1, borderColor: '#ECECEC' }}>
+        <Button title="Back" onPress={() => router.back()} color={Colors.primaryGreen} />
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 10 }}>Global Chats</Text>
+      </View> */}
       {loading ? ( 
         <View style={styles.loaderContainer}>
           <ActivityIndicator size="large" color={Colors.primary} />
@@ -139,6 +133,7 @@ export default function ChattingScreen() {
     </KeyboardAvoidingView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

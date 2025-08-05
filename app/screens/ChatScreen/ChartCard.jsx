@@ -7,9 +7,10 @@ import { Colors } from '../../../constants/Colors';
 export default function ChartCard({ organizationName, profileImage, teamNumber, type, message, user }) {
     const router = useRouter();
 
-    // Function to truncate message if word count exceeds 10
+    // Function SUPPOSE to truncate message if word count exceeds 10
+    // btw this funciton doesnt work, but i won't delete it since its a relic 
     const truncateMessage = (msg) => {
-        if (!msg) return ''; // Ensure msg is defined
+        if (!msg) return ''; 
         const words = msg.split(' ');
         if (words.length > 10) {
             return words.slice(0, 10).join(' ') + '...';
@@ -36,7 +37,6 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
                             style={styles.image}
                         />
                         <View style={styles.infoContainer}>
-                            {/* Organization name */}
                             <Text style={styles.organizationName}>
                                 {organizationName}
                             </Text>
@@ -58,7 +58,7 @@ export default function ChartCard({ organizationName, profileImage, teamNumber, 
                             </View>
                         </View>
                     </View>
-                    {/* End of user information  */}
+
                     {/* button  */}
                     <TouchableOpacity
                         style={{

@@ -102,11 +102,11 @@ const Map = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setOldPinned(pins); // Update pinData with all markers from Firestore
+      // Update pinData with all markers from Firestore
+      setOldPinned(pins); 
       console.log("Old pinned data 2 : ", pins);
     });
 
-    // Cleanup on component unmount
     return () => unsubscribe();
   }, []);
 
@@ -117,10 +117,10 @@ const Map = () => {
         const pinDoc = await firestore()
           .collection("Markers")
           .doc(pin.id)
-          .get(); // Adjust collection and doc ID as needed
+          .get(); 
         if (pinDoc.exists) {
           const pinData = pinDoc.data();
-          setOldPinned(pinData.pinnedBy); // assuming `pinnedBy` contains the original user's name
+          setOldPinned(pinData.pinnedBy); 
         }
       } catch (error) {
         console.error("Error fetching pinned user data:", error);

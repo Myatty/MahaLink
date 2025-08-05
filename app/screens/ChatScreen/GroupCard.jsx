@@ -7,9 +7,10 @@ import { Colors } from '../../../constants/Colors';
 export default function GroupCard({ townshipName, profileImage, teamNumber, type, message, user }) {
     const router = useRouter();
 
-    // Function to truncate message if word count exceeds 10
+    // Function SUPPOSE to truncate message if word count exceeds 10
+    // btw this funciton doesnt work, but i won't delete it since its a relic 
     const truncateMessage = (msg) => {
-        if (!msg) return ''; // Ensure msg is defined
+        if (!msg) return ''; 
         const words = msg.split(' ');
         if (words.length > 10) {
             return words.slice(0, 10).join(' ') + '...';
@@ -19,7 +20,7 @@ export default function GroupCard({ townshipName, profileImage, teamNumber, type
 
     return (
         <View style={{ marginBottom: 10 }}>
-            {/* Card started */}
+            {/* Card starts here */}
             <TouchableOpacity
                 style={styles.container}
                 onPress={() => router.push({
@@ -36,7 +37,6 @@ export default function GroupCard({ townshipName, profileImage, teamNumber, type
                             style={styles.image}
                         />
                         <View style={styles.infoContainer}>
-                            {/* Organization name */}
                             <Text style={styles.townshipName}>
                                 {townshipName}
                             </Text>
@@ -58,7 +58,6 @@ export default function GroupCard({ townshipName, profileImage, teamNumber, type
                             </View>
                         </View>
                     </View>
-                    {/* End of user information  */}
                     {/* button  */}
                     <TouchableOpacity
                         style={{

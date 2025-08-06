@@ -1,28 +1,18 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useLayoutEffect, useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import { Button, FlatList, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 
+// dummy msg, hehe
 const initialMessages = [
   { id: '1', text: 'Hello!', sender: 'user', time: '10:00 AM', profileImage: 'https://placehold.co/400', senderName: 'User' },
   { id: '2', text: 'Hi there!', sender: 'other', time: '10:01 AM', profileImage: 'https://placehold.co/400', senderName: 'Other' },
-  // ... other messages
 ];
 
-// This Screen is useless
-export default function ChattingScreen() {
-  const route = useRoute();
-  const navigation = useNavigation();
-  const { organizationName } = route.params;
-
+export default function GlobalChatScreen() {
+  const { organizationName } = useLocalSearchParams();
   const [messages, setMessages] = useState(initialMessages);
   const [inputText, setInputText] = useState('');
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: organizationName,
-    });
-  }, [navigation, organizationName]);
 
   const handleSend = () => {
     if (inputText.trim()) {
@@ -38,25 +28,25 @@ export default function ChattingScreen() {
       setInputText('');
     }
   };
-// Inside the renderItem function
-const renderItem = ({ item }) => (
-  <View style={[styles.messageWrapper, item.sentBy === organizationName ? styles.userWrapper : styles.otherWrapper]}>
-    {item.sentBy !== organizationName && (
-      <Image source={{ uri: item.profileImage || 'https://placehold.co/400' }} style={styles.profileImage} />
-    )}
-    <View style={{ flexDirection: 'column', alignItems: item.sentBy === organizationName ? 'flex-end' : 'flex-start', width: '100%' }}>
-      <View style={[styles.messageContainer, item.sentBy === organizationName ? styles.userMessage : styles.otherMessage]}>
-        <View style={styles.messageContent}>
-          <Text style={styles.messageText}>{item.message}</Text>
-          <Text style={styles.messageTime}>{item.timestamp?.toDate().toLocaleTimeString() || ''}</Text>
-        </View>
-      </View>
-      {item.sentBy !== organizationName && (
-        <Text style={styles.senderName}>{item.sentBy}</Text>
+
+  const renderItem = ({ item }) => (
+    <View style={[styles.messageWrapper, item.sender === 'user' ? styles.userWrapper : styles.otherWrapper]}>
+      {item.sender !== 'user' && (
+        <Image source={{ uri: item.profileImage || 'https://placehold.co/400' }} style={styles.profileImage} />
       )}
+      <View style={{ flexDirection: 'column', alignItems: item.sender === 'user' ? 'flex-end' : 'flex-start', width: '100%' }}>
+        <View style={[styles.messageContainer, item.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+          <View style={styles.messageContent}>
+            <Text style={styles.messageText}>{item.text}</Text>
+            <Text style={styles.messageTime}>{item.time || ''}</Text>
+          </View>
+        </View>
+        {item.sender !== 'user' && (
+          <Text style={styles.senderName}>{item.senderName}</Text>
+        )}
+      </View>
     </View>
-  </View>
-);
+  );
 
   return (
     <KeyboardAvoidingView
@@ -85,7 +75,6 @@ const renderItem = ({ item }) => (
   );
 }
 
-// Update the styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

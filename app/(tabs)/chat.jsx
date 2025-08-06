@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Colors } from '../../constants/Colors';
-import { auth, db } from '../../firebaseConfig'; // Ensure you have Firebase initialized and configured
+import { auth, db } from '../../firebaseConfig'; 
 import ChartCard from '../screens/ChatScreen/ChartCard';
 import GroupCard from '../screens/ChatScreen/GroupCard';
 
@@ -84,7 +84,7 @@ export default function Chat() {
                             key={index}
                             townshipName={`${township}`}
                             message={`Message from ${township} group`}
-                            teamNumber={10} // Adjust this number as needed
+                            teamNumber={10} 
                             type="group"
                             profileImage={require('../../assets/images/profile.png')}
                         />

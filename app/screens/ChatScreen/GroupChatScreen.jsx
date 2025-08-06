@@ -1,5 +1,5 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   FlatList,
@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { Colors } from "../../../constants/Colors";
 import {
-  getFirestore,
   collection,
   addDoc,
   onSnapshot,
@@ -26,20 +25,12 @@ import {
 import { auth, db } from "../../../firebaseConfig";
 
 export default function GroupChatScreen() {
-  const route = useRoute();
-  const navigation = useNavigation();
-  const { townshipName } = route.params || {};
+  const { townshipName } = useLocalSearchParams();
+  const router = useRouter();
 
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
   const [userName, setUserName] = useState("");
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: townshipName,
-      headerBackTitle: "Back",
-    });
-  }, [navigation, townshipName]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,17 +46,8 @@ export default function GroupChatScreen() {
     fetchUserData();
   }, []);
 
-  // screen title
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: townshipName,
-      headerLeft: () => (
-        <Button title="Back" onPress={() => navigation.goBack()} />
-      ),
-    });
-  }, [navigation]);
-
   useEffect(() => {
+    if (!townshipName) return;
     const messagesRef = collection(db, "townshipChats", townshipName, "Messages");
     const q = query(messagesRef, orderBy("timestamp", "asc"));
 

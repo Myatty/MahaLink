@@ -3,26 +3,33 @@ import { Image, Text, View } from "react-native";
 import { icons } from "../../constants";
 import { Colors } from '../../constants/Colors';
 
-
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className="flex items-center justify-center gap-2">
+    <View style={{ alignItems: 'center', justifyContent: 'center', gap: 2, height: 48 }}>
       <Image
         source={icon}
         resizeMode="contain"
         tintColor={color}
-        className="w-6 h-6"
+        style={{ width: 24, height: 24 }}
       />
       <Text
-        className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
-        style={{ color: color }}
+        style={{
+          color,
+          fontSize: 11,
+          lineHeight: 13,
+          fontFamily: focused ? "Poppins-SemiBold" : "Poppins-Regular",
+          marginTop: 2,
+          maxWidth: 48,
+          textAlign: 'center',
+        }}
+        numberOfLines={1}
+        ellipsizeMode="tail"
       >
         {name}
       </Text>
     </View>
   );
 };
-
 const TabLayout = () => {
   return (
 
@@ -34,7 +41,7 @@ const TabLayout = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: Colors.tailwind.updatedBg,
-          height: 84,
+          height: 75,
         },
       }}
     >

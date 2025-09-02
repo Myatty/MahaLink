@@ -195,7 +195,7 @@ const Map = () => {
         main: { humidity },
       } = forecast;
 
-      if (pop > 0.6 && humidity > 80) {
+      if (pop > 0.6 && humidity > 85) {
         highRainfallCount++;
       }
     });
